@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Kevin Moyolema",
+        "role": "Desarrollador de software",
+        "description": "Desarrolador de Software full-stack: diseño APIs, e-commerce e inventarios escalables con Java, Kotlin, C#, PHP y JavaScript.",
+        "image": "assets\/images\/team\/687ae2f4ed139_What_is_System_Software.avif"
+    },
+    {
+        "name": "Nelly Montaguano",
+        "role": "Artesana de Yeso &amp;amp; Marketing",
+        "description": "Experta en tecnologías emergentes y desarrollo de aplicaciones web y móviles innovadoras.",
+        "image": "assets\/images\/team\/687ae3147209d_WhatsApp Image 2025-07-18 at 7.11.17 PM.jpeg"
+    },
+    {
+        "name": "Freddy Moyolema",
+        "role": "Productor Aceites Esenciales",
+        "description": "Experto en destilacion de aceites esenciales.",
+        "image": "assets\/images\/team\/68785a8666e85_Screenshot 2025-07-16 210527.png"
+    }
+]
