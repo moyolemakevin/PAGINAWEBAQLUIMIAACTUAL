@@ -117,8 +117,6 @@
         playButton.hidden = motion.matches;
         playButton.setAttribute('aria-label', pausedByUser ? 'Reanudar carrusel' : 'Pausar carrusel');
         playButton.querySelector('i').className = `fas fa-${pausedByUser ? 'play' : 'pause'}`;
-        const status = carousel.querySelector('[data-spotlight-rotation-status]');
-        status.textContent = motion.matches ? 'Elige un producto con los controles' : pausedByUser ? 'Rotación en pausa · pulsa reproducir para continuar' : 'Rotación automática · cada 6 segundos';
         liveRegion.setAttribute('aria-live', stopped ? 'polite' : 'off');
         if (!stopped) timer = setInterval(() => setSlide(current + 1), 6000);
     };

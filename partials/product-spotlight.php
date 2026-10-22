@@ -71,7 +71,6 @@ if (!$spotlightProducts) return;
             </div>
             <?php if (count($spotlightProducts) > 1): ?>
             <div class="spotlight-controls" hidden data-spotlight-controls>
-                <span class="spotlight-rotation-status" data-spotlight-rotation-status>Rotación automática · cada 6 segundos</span>
                 <div class="spotlight-dots" role="group" aria-label="Seleccionar producto">
                     <?php foreach ($spotlightProducts as $spotlightIndex => $spotlightItem): ?><button type="button" data-spotlight-dot="<?= $spotlightIndex ?>" aria-label="Mostrar <?= $escape($spotlightItem['name']) ?>" aria-current="<?= $spotlightIndex === 0 ? 'true' : 'false' ?>"><span></span></button><?php endforeach; ?>
                 </div>

@@ -2,6 +2,8 @@
 
 La portada conserva la imagen configurada en el administrador. Los textos presentan software a medida, aceites esenciales, maceteros de yeso y suscripciones digitales. Incluye un selector de categorías, productos destacados y acceso al carrito y a WhatsApp.
 
+Orden actual del inicio: presentación, categorías, productos destacados, cómo comprar, contacto por WhatsApp y escaparate como última sección comercial, antes del pie «Hecho por Moyoalquimia». El carrusel conserva la rotación, las flechas, los puntos y el botón de pausa, sin textos técnicos sobre el intervalo de rotación.
+
 Los estilos nuevos están en `assets/css/experience.css`. Las interacciones de la portada están en `assets/js/experience.js`. El estilo anterior se conserva en `assets/css/style.css`.
 
 ## Puntos de retorno
@@ -14,9 +16,16 @@ Los estilos nuevos están en `assets/css/experience.css`. Las interacciones de l
 - Rotación ampliada y publicidad inferior izquierda: etiqueta `publicidad-productos-20261022`.
 - Paleta gris azulada y tipografía más legible: etiqueta `paleta-legible-20261022`.
 - Correcciones de superposición, contraste y composición: etiqueta `correcciones-visuales-20261022`.
+- Orden final del inicio y retirada del texto de rotación: etiqueta `inicio-ordenado-20261022`.
 - Copia completa anterior de la carpeta: `C:\laragon\backups\WEBMOYOALQUIMIA-antes-rediseno-20261022`.
 
-Para deshacer únicamente las últimas correcciones visuales, con los cambios posteriores guardados:
+Para deshacer únicamente el último cambio de orden del inicio, con los cambios posteriores guardados:
+
+```powershell
+& 'C:\laragon\bin\git\bin\git.exe' revert inicio-ordenado-20261022
+```
+
+Después, para deshacer también las correcciones visuales:
 
 ```powershell
 & 'C:\laragon\bin\git\bin\git.exe' revert correcciones-visuales-20261022
@@ -74,7 +83,7 @@ La tipografía de la portada se ajustó para la lectura: descripción principal 
 
 El escaparate combina hasta ocho productos: primero los de mayor cantidad de unidades en pedidos pagados y no cancelados, siempre que sigan disponibles públicamente; después, una selección de las categorías activas, destacados y novedades del catálogo. Solo los primeros reciben la etiqueta de ventas. Los descuentos y precios salen del producto actual. No se generan compradores, ventas recientes ni cifras simuladas.
 
-El carrusel tiene anterior, siguiente, selección directa, pausa y un texto que indica su estado. Cambia cada seis segundos mientras está visible, incluso con el puntero encima; se detiene con el botón de pausa, al navegar con el teclado dentro del carrusel, ocultar la pestaña o activar movimiento reducido. Las flechas y los puntos usados con el ratón no desactivan la rotación automática. La navegación manual sigue funcionando con movimiento reducido. Sin JavaScript se muestra el primer producto con sus enlaces.
+El carrusel tiene anterior, siguiente, selección directa y pausa. Cambia cada seis segundos mientras está visible, incluso con el puntero encima; se detiene con el botón de pausa, al navegar con el teclado dentro del carrusel, ocultar la pestaña o activar movimiento reducido. No muestra mensajes sobre el intervalo de rotación. Las flechas y los puntos usados con el ratón no desactivan la rotación automática. La navegación manual sigue funcionando con movimiento reducido. Sin JavaScript se muestra el primer producto con sus enlaces.
 
 La portada incorpora movimiento suave de la imagen original, una cuadrícula animada, iluminación en las categorías, entradas al desplazarse y una barra de progreso. Se respetan las preferencias de movimiento reducido. No se modifican los archivos de imagen ni los datos de productos o pedidos.
 
@@ -88,7 +97,7 @@ La publicidad se muestra nueve segundos y deja una pausa de veintitrés segundos
 
 - `assets/js/floating-ui.js` protege los controles de la página: la publicidad y WhatsApp se ocultan temporalmente si su posición tapa botones o enlaces de acción y vuelven al quedar libres. Se reprodujeron los dos fallos originales y se verificó el elemento que recibe el clic, incluyendo el carrito.
 - Las etiquetas de categoría del catálogo tienen fondo y texto acordes al tema, sin opacidad que reduzca el contraste. El selector de lista/cuadrícula usa el acento de la marca y mantiene ambos botones alineados.
-- La portada tiene menos altura y elementos repetidos. En móvil se conserva la imagen completa, en un tamaño más compacto. Los productos destacados aparecen antes de las categorías. A 390 px, los destacados pasan de unos 4.028 px a 1.865 px desde el comienzo de la página.
+- La portada tiene menos altura y elementos repetidos. En móvil se conserva la imagen completa, en un tamaño más compacto. La organización posterior acordada presenta primero las categorías, después los destacados y deja el escaparate al final del inicio.
 - Los resúmenes del escaparate y del catálogo parten de la descripción completa y se acortan por palabras. La base de datos permanece intacta. Se retiraron los mínimos de altura individuales que dejaban huecos entre nombre, descripción y precio del escaparate.
 - Las imágenes mantienen su contenido completo dentro de marcos con espaciado uniforme. No se modificaron los archivos originales.
 

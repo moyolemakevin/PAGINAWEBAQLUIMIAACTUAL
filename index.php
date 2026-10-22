@@ -78,11 +78,25 @@ include __DIR__ . '/partials/navbar.php';
         </div>
     </section>
 
-    <?php include __DIR__ . '/partials/product-spotlight.php'; ?>
+    <section class="experience-categories" id="categorias" aria-labelledby="categories-title">
+        <div class="container">
+            <div class="experience-section-heading"><div><p class="experience-eyebrow">01 / NUESTRAS CATEGORÍAS</p><h2 id="categories-title">Lo que necesitas,<br><span>en un solo lugar.</span></h2></div><p>Soluciones digitales, bienestar y decoración.<br class="d-none d-md-block"> Elige una categoría para conocer nuestros productos.</p></div>
+            <div class="categories-mosaic">
+                <?php foreach ($catalogCategories as $categoryIndex => $catalogCategory): ?>
+                <a class="category-tile category-tile-<?= $escape($catalogCategory['slug']) ?>" href="<?= $escape($catalogCategory['url']) ?>">
+                    <div class="category-tile-top"><span><?= str_pad((string) ($categoryIndex + 1), 2, '0', STR_PAD_LEFT) ?> / <?= $escape($catalogCategory['eyebrow']) ?></span><span class="category-tile-arrow" aria-hidden="true">↗</span></div>
+                    <div class="category-art" aria-hidden="true"><div class="category-art-orbit"></div><i class="<?= $escape($catalogCategory['icon']) ?>"></i><span class="category-art-point"></span></div>
+                    <div class="category-tile-content"><h3><?= $escape($catalogCategory['name']) ?></h3><p><?= $escape($catalogCategory['summary']) ?></p><span class="category-tile-cta">Explorar colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span></div>
+                </a>
+                <?php endforeach; ?>
+                <?php if (!$catalogCategories): ?><p>Estamos preparando nuevas colecciones. <a href="<?= $escape($whatsappUrl) ?>">Escríbenos para conocer más.</a></p><?php endif; ?>
+            </div>
+        </div>
+    </section>
 
     <section class="experience-featured" id="destacados" aria-labelledby="featured-title">
         <div class="container">
-            <div class="experience-section-heading"><div><p class="experience-eyebrow">01 / PRODUCTOS DESTACADOS</p><h2 id="featured-title">Una selección<br><span>para empezar.</span></h2></div><a class="experience-text-link" href="products.php">Ver todo el catálogo <span aria-hidden="true">↗</span></a></div>
+            <div class="experience-section-heading"><div><p class="experience-eyebrow">02 / PRODUCTOS DESTACADOS</p><h2 id="featured-title">Una selección<br><span>para empezar.</span></h2></div><a class="experience-text-link" href="products.php">Ver todo el catálogo <span aria-hidden="true">↗</span></a></div>
             <div class="experience-product-grid">
                 <?php foreach ($featuredProducts as $item):
                     $image = Product::getImagePath($item) ?: 'assets/images/placeholder.jpg';
@@ -104,22 +118,6 @@ include __DIR__ . '/partials/navbar.php';
         </div>
     </section>
 
-    <section class="experience-categories" id="categorias" aria-labelledby="categories-title">
-        <div class="container">
-            <div class="experience-section-heading"><div><p class="experience-eyebrow">02 / NUESTRAS CATEGORÍAS</p><h2 id="categories-title">Lo que necesitas,<br><span>en un solo lugar.</span></h2></div><p>Soluciones digitales, bienestar y decoración.<br class="d-none d-md-block"> Elige una categoría para conocer nuestros productos.</p></div>
-            <div class="categories-mosaic">
-                <?php foreach ($catalogCategories as $categoryIndex => $catalogCategory): ?>
-                <a class="category-tile category-tile-<?= $escape($catalogCategory['slug']) ?>" href="<?= $escape($catalogCategory['url']) ?>">
-                    <div class="category-tile-top"><span><?= str_pad((string) ($categoryIndex + 1), 2, '0', STR_PAD_LEFT) ?> / <?= $escape($catalogCategory['eyebrow']) ?></span><span class="category-tile-arrow" aria-hidden="true">↗</span></div>
-                    <div class="category-art" aria-hidden="true"><div class="category-art-orbit"></div><i class="<?= $escape($catalogCategory['icon']) ?>"></i><span class="category-art-point"></span></div>
-                    <div class="category-tile-content"><h3><?= $escape($catalogCategory['name']) ?></h3><p><?= $escape($catalogCategory['summary']) ?></p><span class="category-tile-cta">Explorar colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span></div>
-                </a>
-                <?php endforeach; ?>
-                <?php if (!$catalogCategories): ?><p>Estamos preparando nuevas colecciones. <a href="<?= $escape($whatsappUrl) ?>">Escríbenos para conocer más.</a></p><?php endif; ?>
-            </div>
-        </div>
-    </section>
-
     <section class="experience-how" aria-labelledby="how-title"><div class="container"><div class="experience-section-heading"><div><p class="experience-eyebrow">03 / CÓMO COMPRAR</p><h2 id="how-title">Compra con asesoría.<br><span>En tres pasos.</span></h2></div><p>Consulta disponibilidad y condiciones.<br>Te ayudamos a elegir antes de comprar.</p></div><div class="experience-steps">
         <article><span>01</span><i class="fas fa-compass" aria-hidden="true"></i><h3>Elige tu producto</h3><p>Consulta las categorías, compara los productos y añade tus favoritos al carrito.</p></article>
         <article><span>02</span><i class="fab fa-whatsapp" aria-hidden="true"></i><h3>Conversemos</h3><p>Resuelve tus dudas por WhatsApp y consulta disponibilidad, entrega o activación.</p></article>
@@ -127,6 +125,8 @@ include __DIR__ . '/partials/navbar.php';
     </div></div></section>
 
     <section class="experience-contact" aria-labelledby="contact-title"><div class="container"><div class="experience-contact-panel"><div><p class="experience-eyebrow"><span class="status-dot"></span> ASESORÍA DIRECTA · MOYOALQUIMIA</p><h2 id="contact-title">¿En qué podemos<br><span>ayudarte?</span></h2><p>Pregunta por nuestros productos, suscripciones o software a medida.<br>Consulta precios, disponibilidad y opciones de entrega.</p></div><a href="<?= $escape($whatsappUrl) ?>" target="_blank" rel="noopener noreferrer" class="experience-button experience-button-primary"><i class="fab fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a><span class="contact-orbit" aria-hidden="true"></span></div></div></section>
+
+    <?php include __DIR__ . '/partials/product-spotlight.php'; ?>
 </main>
 <?php include __DIR__ . '/partials/footer.php'; ?>
 <?php include __DIR__ . '/partials/scripts.php'; ?>
