@@ -12,9 +12,16 @@ Los estilos nuevos están en `assets/css/experience.css`. Las interacciones de l
 - Escaparate de productos y movimiento: etiqueta `escaparate-interactivo-20261022`.
 - Modo claro en arena y crema: etiqueta `modo-claro-arena-20261022`.
 - Rotación ampliada y publicidad inferior izquierda: etiqueta `publicidad-productos-20261022`.
+- Paleta gris azulada y tipografía más legible: etiqueta `paleta-legible-20261022`.
 - Copia completa anterior de la carpeta: `C:\laragon\backups\WEBMOYOALQUIMIA-antes-rediseno-20261022`.
 
-Para deshacer la publicidad y la ampliación del carrusel, con los cambios posteriores guardados:
+Para deshacer el último ajuste de paleta y tamaños de texto, con los cambios posteriores guardados:
+
+```powershell
+& 'C:\laragon\bin\git\bin\git.exe' revert paleta-legible-20261022
+```
+
+Después, para deshacer también la publicidad y la ampliación del carrusel:
 
 ```powershell
 & 'C:\laragon\bin\git\bin\git.exe' revert publicidad-productos-20261022
@@ -52,7 +59,9 @@ Comprobados: sintaxis PHP y JavaScript; portada en 360, 390, 768 y 1440 px; imag
 
 Capturas y scripts de comprobación locales: `C:\laragon\backups\moyo-visual-checks-20261022`.
 
-La paleta usa fondos arena, tarjetas crema, detalles salvia y acentos verde petróleo como presentación inicial. El modo oscuro conserva sus tonos azul verdoso y menta. El cambio de paleta afecta la portada, el menú, el pie y las superficies del catálogo. El botón superior conserva la preferencia al recargar y navegar. Se mantuvo la imagen original. Se verificaron ambos modos en escritorio y en 360, 390 y 768 px, el menú móvil y el contraste de las superficies y textos principales de la portada y las tarjetas del catálogo.
+La paleta clara usa fondos gris azulado, superficies ligeramente más claras, títulos azul profundo y acentos azul petróleo, coordinados con la imagen principal. El modo oscuro conserva sus tonos azul verdoso y menta. El cambio de paleta afecta la portada, el menú, el pie y las superficies del catálogo. El botón superior conserva la preferencia al recargar y navegar. Se mantuvo la imagen original. Se verificaron ambos modos en escritorio y en 360, 390 y 768 px, el menú móvil y el contraste de las superficies y textos principales de la portada y las tarjetas del catálogo.
+
+La tipografía de la portada se ajustó para la lectura: descripción principal de 18 px en escritorio y 16 px en celular; menú de 15 px y botones principales de 15 px en escritorio y 14 px en celular; descripciones del escaparate de 16 px; etiquetas y notas de al menos 12 px. Los títulos mantienen su jerarquía, con el título principal un poco más contenido. Los tamaños también se aplican al modo oscuro. Las etiquetas de categoría tienen mayor contraste y los controles admiten saltos de línea en pantallas pequeñas.
 
 ## Escaparate y movimiento
 
