@@ -47,7 +47,7 @@ include __DIR__ . '/partials/navbar.php';
                     <h1 id="experience-title">Innovación.<br>Bienestar.<br><span>Creatividad.</span></h1>
                     <p class="experience-lead">Software a medida, aceites esenciales, maceteros de yeso y suscripciones digitales. Encuentra lo que necesitas, con asesoría directa.</p>
                     <div class="experience-actions">
-                        <a class="experience-button experience-button-gold" href="products.php">Explorar el catálogo <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        <a class="experience-button experience-button-primary" href="products.php">Explorar el catálogo <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                         <a class="experience-text-link" href="#categorias">Ver categorías <span aria-hidden="true">↗</span></a>
                     </div>
                     <div class="experience-signature"><span class="signature-line"></span> Atención personalizada desde Ecuador.</div>
@@ -120,7 +120,7 @@ include __DIR__ . '/partials/navbar.php';
         <article><span>03</span><i class="fas fa-box-open" aria-hidden="true"></i><h3>Coordina tu pedido</h3><p>Confirma con nosotros el pago y la entrega o activación, según el producto que elijas.</p></article>
     </div></div></section>
 
-    <section class="experience-contact" aria-labelledby="contact-title"><div class="container"><div class="experience-contact-panel"><div><p class="experience-eyebrow"><span class="status-dot"></span> ASESORÍA DIRECTA · MOYOALQUIMIA</p><h2 id="contact-title">¿En qué podemos<br><span>ayudarte?</span></h2><p>Pregunta por nuestros productos, suscripciones o software a medida.<br>Consulta precios, disponibilidad y opciones de entrega.</p></div><a href="<?= $escape($whatsappUrl) ?>" target="_blank" rel="noopener noreferrer" class="experience-button experience-button-gold"><i class="fab fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a><span class="contact-orbit" aria-hidden="true"></span></div></div></section>
+    <section class="experience-contact" aria-labelledby="contact-title"><div class="container"><div class="experience-contact-panel"><div><p class="experience-eyebrow"><span class="status-dot"></span> ASESORÍA DIRECTA · MOYOALQUIMIA</p><h2 id="contact-title">¿En qué podemos<br><span>ayudarte?</span></h2><p>Pregunta por nuestros productos, suscripciones o software a medida.<br>Consulta precios, disponibilidad y opciones de entrega.</p></div><a href="<?= $escape($whatsappUrl) ?>" target="_blank" rel="noopener noreferrer" class="experience-button experience-button-primary"><i class="fab fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a><span class="contact-orbit" aria-hidden="true"></span></div></div></section>
 </main>
 <?php include __DIR__ . '/partials/footer.php'; ?>
 <?php include __DIR__ . '/partials/scripts.php'; ?>

@@ -4,10 +4,11 @@
   function setIcon(toggle, isDark) {
     if (!toggle) return;
     toggle.innerHTML = isDark
-      ? '<i class="fas fa-sun"></i>'
-      : '<i class="fas fa-moon"></i>';
+      ? '<i class="fas fa-sun" aria-hidden="true"></i><span class="theme-label">Modo claro</span>'
+      : '<i class="fas fa-moon" aria-hidden="true"></i><span class="theme-label">Modo oscuro</span>';
     toggle.setAttribute('aria-pressed', String(isDark));
     toggle.setAttribute('title', isDark ? 'Modo claro' : 'Modo oscuro');
+    toggle.setAttribute('aria-label', isDark ? 'Activar modo claro' : 'Activar modo oscuro');
   }
 
   function updateAllToggles(toggles, isDark) {
@@ -21,6 +22,7 @@
       const saved = localStorage.getItem('darkMode');
       const enable = saved === 'enabled';
       document.body.classList.toggle('dark-mode', enable);
+      document.documentElement.style.colorScheme = enable ? 'dark' : 'light';
       updateAllToggles(toggles, enable);
     } catch (e) {
       // Fallback to light mode if storage fails
@@ -41,6 +43,7 @@
       toggle.addEventListener('click', function () {
         const isDark = !document.body.classList.contains('dark-mode');
         document.body.classList.toggle('dark-mode', isDark);
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
         try {
           localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         } catch (e) {
