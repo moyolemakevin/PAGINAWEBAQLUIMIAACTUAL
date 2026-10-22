@@ -5,4 +5,5 @@
 <script src="<?php echo assetUrl('assets/js/effects.js'); ?>" defer></script>
 <script src="<?php echo assetUrl('assets/js/main.js'); ?>" defer></script>
 <script src="<?php echo assetUrl('assets/js/theme.js'); ?>" defer></script>
+<script src="<?php echo assetUrl('assets/js/footer.js'); ?>" defer></script>
 <script src="<?php echo assetUrl('assets/js/floating-ui.js'); ?>" defer></script>

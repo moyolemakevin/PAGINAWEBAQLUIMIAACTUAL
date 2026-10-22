@@ -11,7 +11,7 @@
     const update = () => {
         frame = 0;
         if (refreshControls) {
-            controls = [...main.querySelectorAll('a[href], button, input, select, textarea, [tabindex="0"], .category-tile-cta'), ...document.querySelectorAll('.footer-web-contact a[href]')].filter(el => !el.closest('.product-promotion'));
+            controls = [...main.querySelectorAll('a[href], button, input, select, textarea, [tabindex="0"], .category-tile-cta'), ...document.querySelectorAll('.site-footer a[href], .site-footer summary')].filter(el => !el.closest('.product-promotion'));
             refreshControls = false;
         }
         const bounds = controls.flatMap(element => {
@@ -45,6 +45,7 @@
     document.addEventListener('load', schedule, true);
     const observer = new MutationObserver(() => { refreshControls = true; schedule(); });
     observer.observe(main, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
+    document.querySelectorAll('[data-footer-group]').forEach(group => group.addEventListener('toggle', schedule));
     if ('ResizeObserver' in window) {
         const resizeObserver = new ResizeObserver(schedule);
         floats.forEach(element => resizeObserver.observe(element));

@@ -20,7 +20,14 @@ El modo oscuro es la opción inicial si no hay una preferencia guardada. El sele
 - Correcciones de superposición, contraste y composición: etiqueta `correcciones-visuales-20261022`.
 - Orden final del inicio y retirada del texto de rotación: etiqueta `inicio-ordenado-20261022`.
 - Catálogo completo, rotación más rápida y ChatGPT primero en publicidad: etiqueta `escaparate-completo-20261022`.
+- Inicio más compacto, fotos reales en categorías y pie móvil desplegable: etiqueta `inicio-compacto-20261022`.
 - Copia completa anterior de la carpeta: `C:\laragon\backups\WEBMOYOALQUIMIA-antes-rediseno-20261022`.
+
+Para deshacer únicamente los ajustes de composición del inicio y el pie desplegable, conservando el modo oscuro inicial y las tarjetas compactas del catálogo:
+
+```powershell
+& 'C:\laragon\bin\git\bin\git.exe' revert inicio-compacto-20261022
+```
 
 Para deshacer únicamente la ampliación a todo el catálogo y la prioridad de ChatGPT, con los cambios posteriores guardados:
 
@@ -91,6 +98,16 @@ La tipografía de la portada se ajustó para la lectura: descripción principal 
 ## Tarjetas compactas del catálogo
 
 Las tarjetas de `products.php` y `category.php` presentan foto, categoría, nombre enlazado a la ficha, precio y acciones. No incluyen descripción ni la valoración fija de estrellas. La descripción completa sigue disponible en la ficha y en la vista rápida. La misma presentación se aplica al cargar más productos. Las fotos conservan su contenido completo en un marco de 176 px en escritorio y 136 px en celular; se reducen los espacios del cuerpo y se mantienen botones de al menos 44 px en celular. WhatsApp utiliza un icono con nombre accesible en pantallas pequeñas. Estos ajustes no cambian las descripciones guardadas ni el escaparate del inicio.
+
+## Composición del inicio y pie adaptable
+
+Las categorías muestran una foto real de un producto público de cada línea: se priorizan los destacados de la categoría y, si no los hay, se consulta un producto activo de esa categoría. Sin productos se conserva un icono de respaldo. Las imágenes originales no se editan y se muestran completas mediante `object-fit: contain`, con marcos cuadrados y espaciado uniforme. Las tarjetas de categorías tienen texto y foto en columnas, sin los iconos decorativos grandes.
+
+Los destacados del inicio tienen marcos uniformes, títulos de 17 px en escritorio y 15 px en celular, precios de 21,6 y 19,2 px respectivamente y botones «Agregar» de al menos 44 px de altura. Se mantienen la ficha, el carrito y las fotos originales, y no se añaden descripciones a las tarjetas.
+
+En celular se reducen los espacios de las secciones, las categorías, los pasos de compra y el bloque de contacto. El pie mantiene el contacto visible y agrupa Productos, Empresa y Soporte en desplegables nativos, manejables con teclado. `assets/js/footer.js` los cierra inicialmente en celular y los mantiene abiertos en escritorio; sin JavaScript todos los enlaces se muestran inicialmente. Teléfono y correo son enlaces directos. Los botones flotantes protegen también los enlaces y los encabezados desplegables del pie.
+
+Verificados 360, 390, 575, 768, 1024 y 1440 px en ambos temas, sin desbordamiento horizontal, con contraste de precios y botones superior a 4,5:1; fotos cargadas, teclado, cambio de tamaño, carrito y mensajes de carga. En 390 px, la altura total del inicio pasa de aproximadamente 6975 a 5463 px. La imagen principal, la paleta, el modo oscuro inicial, el orden de secciones y la rotación de 104 productos cada tres segundos se conservan. También se verificaron las tarjetas compactas del catálogo y ChatGPT como primera publicidad. Capturas y comprobación: `C:\laragon\backups\moyo-visual-checks-20261022\home-polish-check.cjs`.
 
 ## Escaparate y movimiento
 

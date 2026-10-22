@@ -10,7 +10,17 @@ $whatsappUrl = 'https://wa.me/593983015307?text=' . rawurlencode('Hola, quiero a
 $catalogCategories = [];
 foreach ($categories as $cat) {
     $presentation = getCategoryPresentation($cat['slug'] ?? '', $cat['name']);
-    $catalogCategories[] = array_merge($cat, $presentation, ['url' => 'category.php?slug=' . rawurlencode($cat['slug'])]);
+    $categoryProducts = array_values(array_filter($featuredProducts, static function ($item) use ($cat) {
+        return (int) $item['category_id'] === (int) $cat['id'];
+    }));
+    if (!$categoryProducts) {
+        $categoryProducts = $productModel->getProductsByCategory($cat['id'], 1, 0, true);
+    }
+    $categoryImage = $categoryProducts ? Product::getImagePath($categoryProducts[0]) : '';
+    $catalogCategories[] = array_merge($cat, $presentation, [
+        'url' => 'category.php?slug=' . rawurlencode($cat['slug']),
+        'media_image' => $categoryImage ? assetUrl($categoryImage) : '',
+    ]);
 }
 $firstCategory = $catalogCategories[0] ?? ['name' => 'Moyoalquimia', 'icon' => 'fas fa-flask', 'summary' => 'Tecnología, bienestar y creatividad para transformar tu día.', 'url' => 'products.php'];
 ?>
@@ -85,7 +95,7 @@ include __DIR__ . '/partials/navbar.php';
                 <?php foreach ($catalogCategories as $categoryIndex => $catalogCategory): ?>
                 <a class="category-tile category-tile-<?= $escape($catalogCategory['slug']) ?>" href="<?= $escape($catalogCategory['url']) ?>">
                     <div class="category-tile-top"><span><?= str_pad((string) ($categoryIndex + 1), 2, '0', STR_PAD_LEFT) ?> / <?= $escape($catalogCategory['eyebrow']) ?></span><span class="category-tile-arrow" aria-hidden="true">↗</span></div>
-                    <div class="category-art" aria-hidden="true"><div class="category-art-orbit"></div><i class="<?= $escape($catalogCategory['icon']) ?>"></i><span class="category-art-point"></span></div>
+                    <div class="category-media" aria-hidden="true"><?php if ($catalogCategory['media_image']): ?><img src="<?= $escape($catalogCategory['media_image']) ?>" alt="" width="224" height="224" loading="lazy" decoding="async"><?php else: ?><i class="<?= $escape($catalogCategory['icon']) ?>"></i><?php endif; ?></div>
                     <div class="category-tile-content"><h3><?= $escape($catalogCategory['name']) ?></h3><p><?= $escape($catalogCategory['summary']) ?></p><span class="category-tile-cta">Explorar colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span></div>
                 </a>
                 <?php endforeach; ?>
@@ -110,7 +120,7 @@ include __DIR__ . '/partials/navbar.php';
                         <?php if ($discount > 0): ?><span class="discovery-discount">−<?= $escape($discount) ?>%</span><?php endif; ?>
                         <span class="discovery-image-arrow" aria-hidden="true">↗</span>
                     </a>
-                    <div class="discovery-body"><h3><a href="<?= $escape($itemUrl) ?>"><?= $escape($item['name']) ?></a></h3><div class="discovery-bottom"><div class="discovery-price"><?php if ($discount > 0): ?><del>$<?= number_format((float) $item['price'], 2) ?></del><?php endif; ?><span>$<?= number_format($finalPrice, 2) ?></span></div><button type="button" class="discovery-add add-to-cart" data-product-id="<?= (int) $item['id'] ?>" data-product-name="<?= $escape($item['name']) ?>" data-product-price="<?= $escape($finalPrice) ?>" data-product-image="<?= $escape($image) ?>" aria-label="Añadir <?= $escape($item['name']) ?> al carrito"><i class="fas fa-plus" aria-hidden="true"></i></button></div></div>
+                    <div class="discovery-body"><h3><a href="<?= $escape($itemUrl) ?>"><?= $escape($item['name']) ?></a></h3><div class="discovery-bottom"><div class="discovery-price"><?php if ($discount > 0): ?><del>$<?= number_format((float) $item['price'], 2) ?></del><?php endif; ?><span>$<?= number_format($finalPrice, 2) ?></span></div><button type="button" class="discovery-add add-to-cart" data-product-id="<?= (int) $item['id'] ?>" data-product-name="<?= $escape($item['name']) ?>" data-product-price="<?= $escape($finalPrice) ?>" data-product-image="<?= $escape($image) ?>" aria-label="Añadir <?= $escape($item['name']) ?> al carrito"><i class="fas fa-cart-plus" aria-hidden="true"></i><span>Agregar</span></button></div></div>
                 </article>
                 <?php endforeach; ?>
                 <?php if (!$featuredProducts): ?><p>Explora nuestras categorías o <a href="<?= $escape($whatsappUrl) ?>">consulta los productos disponibles</a>.</p><?php endif; ?>
