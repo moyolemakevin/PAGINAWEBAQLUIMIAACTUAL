@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/config/bootstrap.php';
-require_once __DIR__ . '/partials/product-summary.php';
 
 $product = new Product();
 $category = new Category();
@@ -234,22 +233,9 @@ include __DIR__ . '/partials/navbar.php';
                                             ?>
                                         </span>
                                     </div>
-                                    <h5 class="card-title mb-2"><?php echo htmlspecialchars($prod['name']); ?></h5>
-                                    <p class="card-text text-muted small mb-3">
-                                        <?php echo htmlspecialchars(getProductSummary($prod, 140), ENT_QUOTES, 'UTF-8'); ?>
-                                    </p>
+                                    <h5 class="card-title mb-2"><a href="product.php?id=<?php echo (int) $prod['id']; ?>"><?php echo htmlspecialchars($prod['name']); ?></a></h5>
                                     
-                                    <!-- Rating -->
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="rating me-2">
-                                            <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                <i class="fas fa-star text-warning"></i>
-                                            <?php endfor; ?>
-                                        </div>
-                                        <small class="text-muted">(4.8)</small>
-                                    </div>
-                                    
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="catalog-card-price">
                                         <div class="price">
                                             <?php if (isset($prod['discount_percentage']) && $prod['discount_percentage'] > 0): ?>
                                                 <span class="text-decoration-line-through text-muted me-2">
@@ -264,16 +250,16 @@ include __DIR__ . '/partials/navbar.php';
                                         </div>
                                     </div>
                                     
-                                    <div class="d-grid gap-2">
+                                    <div class="catalog-card-actions">
                                         <button class="btn btn-primary btn-sm hover-lift" onclick="addToCart(<?php echo $prod['id']; ?>, '<?php echo addslashes($prod['name']); ?>', <?php echo $finalPrice; ?>, '<?php echo $prod['image'] ?: 'assets/images/placeholder.jpg'; ?>')">
                                             <i class="fas fa-cart-plus me-2"></i>
-                                            Agregar al Carrito
+                                            Agregar
                                         </button>
                                         <div class="d-flex gap-2">
                                             <a href="https://wa.me/593983015307?text=Hola%2C%20quiero%20comprar%20el%20producto:%20<?php echo urlencode($prod['name']); ?>%20-%20$<?php echo number_format((isset($prod['discount_percentage']) && $prod['discount_percentage'] > 0) ? $prod['price'] * (1 - $prod['discount_percentage'] / 100) : $prod['price'], 2, ',', '.'); ?>%20-%20Moyoalquimia"
-                                               class="btn btn-success btn-sm hover-lift flex-fill" target="_blank" title="Comprar por WhatsApp">
+                                               class="btn btn-success btn-sm hover-lift flex-fill" target="_blank" title="Comprar por WhatsApp" aria-label="Comprar por WhatsApp">
                                                 <i class="fab fa-whatsapp me-1"></i>
-                                                WhatsApp
+                                                <span class="catalog-whatsapp-label">WhatsApp</span>
                                             </a>
                                             <button class="btn btn-outline-primary btn-sm hover-lift" onclick="quickView(<?php echo $prod['id']; ?>)" title="Vista rápida">
                                                 <i class="fas fa-eye"></i>
@@ -504,7 +490,6 @@ include __DIR__ . '/partials/navbar.php';
                 const listToggle = document.getElementById('list-view');
                 const isListView = listToggle && listToggle.classList.contains('active');
                 const existingItems = container.querySelectorAll('.product-item').length;
-                const ratingStars = '<i class="fas fa-star text-warning"></i>'.repeat(5);
 
                 items.forEach((product, index) => {
                     const col = document.createElement('div');
@@ -523,15 +508,6 @@ include __DIR__ . '/partials/navbar.php';
 
                     const name = product.name || 'Producto';
                     const categoryName = product.category_name || 'General';
-                    const description = String(product.description || product.short_description || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                    const words = description.split(' ');
-                    let truncatedDescription = '';
-                    for (const word of words) {
-                        const next = truncatedDescription ? truncatedDescription + ' ' + word : word;
-                        if (truncatedDescription && next.length > 140) break;
-                        truncatedDescription = next;
-                    }
-                    if (truncatedDescription.length < description.length) truncatedDescription = truncatedDescription.replace(/[ ,;:]+$/, '') + '…';
 
                     const discountBadge = discountPercentage > 0
                         ? '<span class="badge bg-danger position-absolute top-0 start-0 m-2 pulse">-' + discountPercentage + '%</span>'
@@ -575,25 +551,18 @@ include __DIR__ . '/partials/navbar.php';
                                 <div class="mb-2">
                                     <span class="badge catalog-category-badge">${escapeHtml(categoryName)}</span>
                                 </div>
-                                <h5 class="card-title mb-2">${escapeHtml(name)}</h5>
-                                <p class="card-text text-muted small mb-3">${escapeHtml(truncatedDescription)}</p>
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="rating me-2">
-                                        ${ratingStars}
-                                    </div>
-                                    <small class="text-muted">(4.8)</small>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title mb-2"><a href="product.php?id=${Number(product.id)}">${escapeHtml(name)}</a></h5>
+                                <div class="catalog-card-price">
                                     <div class="price">${priceHtml}</div>
                                 </div>
-                                <div class="d-grid gap-2">
+                                <div class="catalog-card-actions">
                                     <button class="btn btn-primary btn-sm hover-lift" onclick='addToCart(${product.id}, ${nameJs}, ${finalPriceRounded}, ${imageJs})'>
-                                        <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                        <i class="fas fa-cart-plus me-2"></i>Agregar
                                     </button>
                                     <div class="d-flex gap-2">
                                         <a href="${whatsappLink}"
-                                           class="btn btn-success btn-sm hover-lift flex-fill" target="_blank" title="Comprar por WhatsApp">
-                                            <i class="fab fa-whatsapp me-1"></i>WhatsApp
+                                           class="btn btn-success btn-sm hover-lift flex-fill" target="_blank" title="Comprar por WhatsApp" aria-label="Comprar por WhatsApp">
+                                            <i class="fab fa-whatsapp me-1"></i><span class="catalog-whatsapp-label">WhatsApp</span>
                                         </a>
                                         <button class="btn btn-outline-primary btn-sm hover-lift" onclick="quickView(${product.id})" title="Vista rápida">
                                             <i class="fas fa-eye"></i>

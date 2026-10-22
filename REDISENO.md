@@ -88,6 +88,10 @@ La paleta clara usa fondos gris azulado, superficies ligeramente más claras, t�
 
 La tipografía de la portada se ajustó para la lectura: descripción principal de 18 px en escritorio y 16 px en celular; menú de 15 px y botones principales de 15 px en escritorio y 14 px en celular; descripciones del escaparate de 16 px; etiquetas y notas de al menos 12 px. Los títulos mantienen su jerarquía, con el título principal un poco más contenido. Los tamaños también se aplican al modo oscuro. Las etiquetas de categoría tienen mayor contraste y los controles admiten saltos de línea en pantallas pequeñas.
 
+## Tarjetas compactas del catálogo
+
+Las tarjetas de `products.php` y `category.php` presentan foto, categoría, nombre enlazado a la ficha, precio y acciones. No incluyen descripción ni la valoración fija de estrellas. La descripción completa sigue disponible en la ficha y en la vista rápida. La misma presentación se aplica al cargar más productos. Las fotos conservan su contenido completo en un marco de 176 px en escritorio y 136 px en celular; se reducen los espacios del cuerpo y se mantienen botones de al menos 44 px en celular. WhatsApp utiliza un icono con nombre accesible en pantallas pequeñas. Estos ajustes no cambian las descripciones guardadas ni el escaparate del inicio.
+
 ## Escaparate y movimiento
 
 El escaparate incluye todos los productos públicos activos del catálogo, sin duplicados: primero los productos con más unidades en pedidos pagados y no cancelados, después una mezcla de categorías y destacados, y a continuación el resto del catálogo. Solo los primeros reciben la etiqueta de ventas. Los descuentos y precios salen del producto actual. No se generan compradores, ventas recientes ni cifras simuladas. Las imágenes del resto de productos se cargan de forma diferida y se precarga la siguiente. Los indicadores muestran una ventana de siete puntos para evitar una fila enorme de botones.
@@ -109,7 +113,7 @@ La publicidad se muestra nueve segundos y deja una pausa de veintitrés segundos
 - `assets/js/floating-ui.js` protege los controles de la página: la publicidad y WhatsApp se ocultan temporalmente si su posición tapa botones o enlaces de acción y vuelven al quedar libres. Se reprodujeron los dos fallos originales y se verificó el elemento que recibe el clic, incluyendo el carrito.
 - Las etiquetas de categoría del catálogo tienen fondo y texto acordes al tema, sin opacidad que reduzca el contraste. El selector de lista/cuadrícula usa el acento de la marca y mantiene ambos botones alineados.
 - La portada tiene menos altura y elementos repetidos. En móvil se conserva la imagen completa, en un tamaño más compacto. La organización posterior acordada presenta primero las categorías, después los destacados y deja el escaparate al final del inicio.
-- Los resúmenes del escaparate y del catálogo parten de la descripción completa y se acortan por palabras. La base de datos permanece intacta. Se retiraron los mínimos de altura individuales que dejaban huecos entre nombre, descripción y precio del escaparate.
+- Los resúmenes del escaparate parten de la descripción completa y se acortan por palabras. Las tarjetas del catálogo ya no muestran descripciones; la ficha y la vista rápida conservan el contenido completo. La base de datos permanece intacta. Se retiraron los mínimos de altura individuales que dejaban huecos entre nombre, descripción y precio del escaparate.
 - Las imágenes mantienen su contenido completo dentro de marcos con espaciado uniforme. No se modificaron los archivos originales.
 
 Verificados 360, 390, 768, 1024, 1366 y 1440 px sin desbordamiento horizontal; cabecera alineada; carrito; ambas vistas del catálogo y carga adicional de productos; contraste de etiquetas superior a 4,5:1 en ambos modos. Sin errores JavaScript durante las pruebas. Capturas y mediciones: `C:\laragon\backups\moyo-visual-checks-20261022\correcciones`.

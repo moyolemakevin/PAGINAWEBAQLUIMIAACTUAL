@@ -137,25 +137,13 @@ $catalogWhatsappUrl = 'https://wa.me/593983015307?text=' . rawurlencode('Hola, q
                                 </div>
                                 <div class="card-body">
                                     <div class="mb-2">
-                                        <span class="badge bg-primary opacity-75 text-white">
+                                        <span class="badge catalog-category-badge">
                                             <?php echo htmlspecialchars($currentCategory['name'], ENT_QUOTES, 'UTF-8'); ?>
                                         </span>
                                     </div>
-                                    <h5 class="card-title mb-2"><?php echo htmlspecialchars($prod['name'], ENT_QUOTES, 'UTF-8'); ?></h5>
-                                    <p class="card-text text-muted small mb-3">
-                                        <?php echo htmlspecialchars(substr((string) $prod['description'], 0, 100), ENT_QUOTES, 'UTF-8'); ?>...
-                                    </p>
+                                    <h5 class="card-title mb-2"><a href="product.php?id=<?php echo (int) $prod['id']; ?>"><?php echo htmlspecialchars($prod['name'], ENT_QUOTES, 'UTF-8'); ?></a></h5>
 
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="rating me-2">
-                                            <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                <i class="fas fa-star text-warning"></i>
-                                            <?php endfor; ?>
-                                        </div>
-                                        <small class="text-muted">(4.8)</small>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="catalog-card-price">
                                         <div class="price">
                                             <?php if (isset($prod['discount_percentage']) && $prod['discount_percentage'] > 0): ?>
                                                 <span class="text-decoration-line-through text-muted me-2">
@@ -170,19 +158,19 @@ $catalogWhatsappUrl = 'https://wa.me/593983015307?text=' . rawurlencode('Hola, q
                                         </div>
                                     </div>
 
-                                    <div class="d-grid gap-2">
+                                    <div class="catalog-card-actions">
                                         <button class="btn btn-primary btn-sm hover-lift" onclick="addToCart(<?php echo (int) $prod['id']; ?>, '<?php echo addslashes($prod['name']); ?>', <?php echo $finalPrice; ?>, '<?php echo $prod['image'] ?: 'assets/images/placeholder.jpg'; ?>')">
                                             <i class="fas fa-cart-plus me-2"></i>
-                                            Agregar al carrito
+                                            Agregar
                                         </button>
                                         <div class="d-flex gap-2">
                                             <a href="https://wa.me/593983015307?text=Hola%2C%20quiero%20comprar%20el%20producto:%20<?php echo urlencode($prod['name']); ?>%20-%20$<?php echo number_format((isset($prod['discount_percentage']) && $prod['discount_percentage'] > 0) ? $prod['price'] * (1 - $prod['discount_percentage'] / 100) : $prod['price'], 2, ',', '.'); ?>%20-%20Moyoalquimia"
                                                class="btn btn-success btn-sm hover-lift flex-fill"
                                                target="_blank"
                                                rel="noopener noreferrer"
-                                               title="Comprar por WhatsApp">
+                                               title="Comprar por WhatsApp" aria-label="Comprar por WhatsApp">
                                                 <i class="fab fa-whatsapp me-1"></i>
-                                                WhatsApp
+                                                <span class="catalog-whatsapp-label">WhatsApp</span>
                                             </a>
                                             <button class="btn btn-outline-primary btn-sm hover-lift" onclick="quickView(<?php echo (int) $prod['id']; ?>)" title="Vista rapida">
                                                 <i class="fas fa-eye"></i>
