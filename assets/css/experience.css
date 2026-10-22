@@ -101,6 +101,9 @@ body > footer h5, body > footer h6 { color: var(--moyo-text); }
 body > footer .text-muted { color: var(--moyo-muted) !important; font-size: .875rem; }
 body > footer a { text-decoration: none; }
 body > footer a:hover { color: var(--moyo-accent) !important; }
+body > footer .footer-web-contact { color: var(--moyo-muted); font-size: .75rem; line-height: 1.6; }
+body > footer .footer-web-contact a { display: inline-block; padding: 6px 2px; color: var(--moyo-accent); text-decoration: underline; text-underline-offset: 3px; }
+body > footer .footer-web-contact a:focus-visible { outline: 2px solid var(--moyo-accent); outline-offset: 3px; border-radius: 2px; }
 
 /* The home page deliberately uses its own layout and no legacy animation hooks. */
 body.experience-home { background: var(--moyo-bg); color: var(--moyo-text); font-family: Inter, sans-serif; }

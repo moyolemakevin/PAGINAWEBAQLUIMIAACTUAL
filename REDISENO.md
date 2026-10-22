@@ -8,6 +8,8 @@ Los estilos nuevos están en `assets/css/experience.css`. Las interacciones de l
 
 ## Puntos de retorno
 
+El modo oscuro es la opción inicial si no hay una preferencia guardada. El selector conserva la elección de modo claro u oscuro al recargar y navegar, y el tema inicial se aplica desde la cabecera. Si el almacenamiento no está disponible, se utiliza el modo oscuro. Bajo «Hecho por Moyoalquimia», una línea discreta de 12 px invita: «¿Quieres una página web? Contáctanos», enlazada a la página de contacto.
+
 - Estado anterior: commit `9763551`, etiqueta `antes-rediseno-20261022`.
 - Rediseño terminado: etiqueta `rediseno-visual-20261022`.
 - Paleta clara y oscura en verde petróleo: etiqueta `paleta-clara-oscura-20261022`.

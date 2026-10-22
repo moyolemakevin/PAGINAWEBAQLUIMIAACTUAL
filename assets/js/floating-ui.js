@@ -11,7 +11,7 @@
     const update = () => {
         frame = 0;
         if (refreshControls) {
-            controls = [...main.querySelectorAll('a[href], button, input, select, textarea, [tabindex="0"], .category-tile-cta')].filter(el => !el.closest('.product-promotion'));
+            controls = [...main.querySelectorAll('a[href], button, input, select, textarea, [tabindex="0"], .category-tile-cta'), ...document.querySelectorAll('.footer-web-contact a[href]')].filter(el => !el.closest('.product-promotion'));
             refreshControls = false;
         }
         const bounds = controls.flatMap(element => {

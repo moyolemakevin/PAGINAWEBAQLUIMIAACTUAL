@@ -76,9 +76,10 @@ $whatsappUrl = getSiteSetting('whatsapp_url', '');
     <hr class="my-4">
     <div class="row justify-content-center">
       <div class="col-12 text-center">
-        <p class="text-center text-muted mb-0">
-          Hecho por Moyoalquimia
-        </p>
+        <div class="footer-credit">
+          <p class="text-muted mb-0">Hecho por Moyoalquimia</p>
+          <p class="footer-web-contact mb-0">¿Quieres una página web? <a href="contact.php">Contáctanos</a></p>
+        </div>
       </div>
     </div>
   </div>

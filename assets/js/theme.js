@@ -20,14 +20,15 @@
   function applyThemeFromStorage(toggles) {
     try {
       const saved = localStorage.getItem('darkMode');
-      const enable = saved === 'enabled';
+      const enable = saved !== 'disabled';
       document.body.classList.toggle('dark-mode', enable);
       document.documentElement.style.colorScheme = enable ? 'dark' : 'light';
       updateAllToggles(toggles, enable);
     } catch (e) {
-      // Fallback to light mode if storage fails
-      document.body.classList.remove('dark-mode');
-      updateAllToggles(toggles, false);
+      // Keep the default dark theme when storage is unavailable.
+      document.body.classList.add('dark-mode');
+      document.documentElement.style.colorScheme = 'dark';
+      updateAllToggles(toggles, true);
     }
   }
 

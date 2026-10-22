@@ -7,13 +7,14 @@ $authEnabled = !isPublicAuthDisabled();
 ?>
 <script>
   (function () {
+    var isDark = true;
     try {
-      if (localStorage.getItem('darkMode') === 'enabled') {
-        document.body.classList.add('dark-mode');
-      }
+      isDark = localStorage.getItem('darkMode') !== 'disabled';
     } catch (e) {
-      // ignore storage errors
+      // Keep the default theme if storage is unavailable.
     }
+    document.body.classList.toggle('dark-mode', isDark);
+    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
   })();
 </script>
 <a class="skip-link" href="#main-content">Saltar al contenido</a>
