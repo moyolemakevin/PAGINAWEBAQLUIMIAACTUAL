@@ -11,6 +11,7 @@ try {
     foreach ($spotlightQuery->fetchAll(PDO::FETCH_ASSOC) as $sold) {
         $soldProduct = $productModel->getProductById((int) $sold['product_id'], true);
         if ($soldProduct) {
+            $soldProduct['spotlight_sold'] = true;
             $soldProduct['spotlight_label'] = 'Entre los más vendidos';
             $soldProduct['spotlight_note'] = 'Según los pedidos pagados registrados en nuestra tienda.';
             $spotlightProducts[(int) $soldProduct['id']] = $soldProduct;
@@ -19,8 +20,15 @@ try {
 } catch (PDOException $e) {
     error_log('Product spotlight: sales ranking unavailable');
 }
-foreach ($featuredProducts as $featured) {
-    if (count($spotlightProducts) >= 4) break;
+// Include different product lines instead of repeating only the featured selection.
+$spotlightCandidates = [];
+foreach ($categories as $spotlightCategory) {
+    $categoryProducts = $productModel->getProductsByCategory((int) $spotlightCategory['id'], 1, 0, true);
+    $spotlightCandidates = array_merge($spotlightCandidates, $categoryProducts);
+}
+$spotlightCandidates = array_merge($spotlightCandidates, $featuredProducts, $productModel->getAllProducts(8, 0, true));
+foreach ($spotlightCandidates as $featured) {
+    if (count($spotlightProducts) >= 8) break;
     if (!isset($spotlightProducts[(int) $featured['id']])) {
         $featured['spotlight_label'] = (float) ($featured['discount_percentage'] ?? 0) > 0 ? 'Precio con descuento' : 'Selección Moyoalquimia';
         $featured['spotlight_note'] = 'Producto destacado de nuestro catálogo.';
@@ -46,7 +54,7 @@ if (!$spotlightProducts) return;
                     $spotlightDescription = 'Conoce sus características y consulta los detalles antes de realizar tu pedido.';
                 }
             ?>
-                <article class="spotlight-slide" data-spotlight-slide role="group" aria-roledescription="diapositiva" aria-label="<?= $spotlightIndex + 1 ?> de <?= count($spotlightProducts) ?>" <?= $spotlightIndex ? 'hidden' : '' ?>>
+                <article class="spotlight-slide" data-spotlight-slide data-product-sold="<?= !empty($spotlightItem['spotlight_sold']) ? 'true' : 'false' ?>" role="group" aria-roledescription="diapositiva" aria-label="<?= $spotlightIndex + 1 ?> de <?= count($spotlightProducts) ?>" <?= $spotlightIndex ? 'hidden' : '' ?>>
                     <a href="<?= $escape($spotlightUrl) ?>" class="spotlight-image" aria-label="Ver <?= $escape($spotlightItem['name']) ?>">
                         <span class="spotlight-image-grid" aria-hidden="true"></span>
                         <img src="<?= $escape(assetUrl($spotlightImage)) ?>" alt="<?= $escape($spotlightItem['name']) ?>" width="480" height="480" loading="lazy" decoding="async">
@@ -66,6 +74,7 @@ if (!$spotlightProducts) return;
             </div>
             <?php if (count($spotlightProducts) > 1): ?>
             <div class="spotlight-controls" hidden data-spotlight-controls>
+                <span class="spotlight-rotation-status" data-spotlight-rotation-status>Rotación automática · cada 6 segundos</span>
                 <div class="spotlight-dots" role="group" aria-label="Seleccionar producto">
                     <?php foreach ($spotlightProducts as $spotlightIndex => $spotlightItem): ?><button type="button" data-spotlight-dot="<?= $spotlightIndex ?>" aria-label="Mostrar <?= $escape($spotlightItem['name']) ?>" aria-current="<?= $spotlightIndex === 0 ? 'true' : 'false' ?>"><span></span></button><?php endforeach; ?>
                 </div>
@@ -75,3 +84,17 @@ if (!$spotlightProducts) return;
         </div>
     </div>
 </section>
+
+<aside class="product-promotion" data-product-promo hidden aria-label="Producto de la tienda">
+    <button type="button" class="product-promotion-close" data-promo-close aria-label="Cerrar publicidad de productos"><i class="fas fa-times" aria-hidden="true"></i></button>
+    <a class="product-promotion-link" data-promo-link>
+        <img data-promo-image alt="" width="72" height="80" decoding="async">
+        <span class="product-promotion-copy">
+            <span class="product-promotion-label" data-promo-label></span>
+            <strong data-promo-name></strong>
+            <span class="product-promotion-price" data-promo-price></span>
+            <span class="product-promotion-note" data-promo-note></span>
+        </span>
+        <span class="product-promotion-arrow" aria-hidden="true">↗</span>
+    </a>
+</aside>

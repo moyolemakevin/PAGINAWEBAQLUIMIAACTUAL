@@ -131,5 +131,6 @@ include __DIR__ . '/partials/navbar.php';
 <?php include __DIR__ . '/partials/footer.php'; ?>
 <?php include __DIR__ . '/partials/scripts.php'; ?>
 <script src="<?= assetUrl('assets/js/experience.js') ?>" defer></script>
+<script src="<?= assetUrl('assets/js/product-promotions.js') ?>" defer></script>
 </body>
 </html>

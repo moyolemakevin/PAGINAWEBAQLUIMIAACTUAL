@@ -98,7 +98,7 @@
     controls.hidden = false;
     let current = 0;
     let manualPause = false;
-    let hovered = false;
+    let keyboardPaused = false;
     let visible = false;
     let timer = null;
     const setSlide = index => {
@@ -112,27 +112,30 @@
     const syncRotation = () => {
         clearInterval(timer);
         timer = null;
-        const stopped = manualPause || hovered || !visible || document.hidden || motion.matches;
+        const pausedByUser = manualPause || keyboardPaused;
+        const stopped = pausedByUser || !visible || document.hidden || motion.matches;
         playButton.hidden = motion.matches;
-        playButton.setAttribute('aria-label', manualPause ? 'Reanudar carrusel' : 'Pausar carrusel');
-        playButton.querySelector('i').className = `fas fa-${manualPause ? 'play' : 'pause'}`;
+        playButton.setAttribute('aria-label', pausedByUser ? 'Reanudar carrusel' : 'Pausar carrusel');
+        playButton.querySelector('i').className = `fas fa-${pausedByUser ? 'play' : 'pause'}`;
+        const status = carousel.querySelector('[data-spotlight-rotation-status]');
+        status.textContent = motion.matches ? 'Elige un producto con los controles' : pausedByUser ? 'Rotación en pausa · pulsa reproducir para continuar' : 'Rotación automática · cada 6 segundos';
         liveRegion.setAttribute('aria-live', stopped ? 'polite' : 'off');
-        if (!stopped) timer = setInterval(() => setSlide(current + 1), 7000);
+        if (!stopped) timer = setInterval(() => setSlide(current + 1), 6000);
     };
     const choose = index => {
-        manualPause = true;
         syncRotation();
         setSlide(index);
     };
     dots.forEach((dot, i) => dot.addEventListener('click', () => choose(i)));
     carousel.querySelector('[data-spotlight-prev]').addEventListener('click', () => choose(current - 1));
     carousel.querySelector('[data-spotlight-next]').addEventListener('click', () => choose(current + 1));
-    playButton.addEventListener('click', () => { manualPause = !manualPause; syncRotation(); });
-    carousel.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') { hovered = true; syncRotation(); } });
-    carousel.addEventListener('pointerleave', () => { hovered = false; syncRotation(); });
+    playButton.addEventListener('click', () => { manualPause = !(manualPause || keyboardPaused); keyboardPaused = false; syncRotation(); });
     carousel.addEventListener('focusin', event => {
-        if (event.target !== playButton && !playButton.contains(event.target)) manualPause = true;
+        if (event.target !== playButton && !playButton.contains(event.target) && event.target.matches(':focus-visible')) keyboardPaused = true;
         syncRotation();
+    });
+    carousel.addEventListener('focusout', event => {
+        if (!carousel.contains(event.relatedTarget)) { keyboardPaused = false; syncRotation(); }
     });
     document.addEventListener('visibilitychange', syncRotation);
     motion.addEventListener('change', syncRotation);

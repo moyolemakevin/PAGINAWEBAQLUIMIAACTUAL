@@ -11,9 +11,16 @@ Los estilos nuevos están en `assets/css/experience.css`. Las interacciones de l
 - Paleta clara y oscura en verde petróleo: etiqueta `paleta-clara-oscura-20261022`.
 - Escaparate de productos y movimiento: etiqueta `escaparate-interactivo-20261022`.
 - Modo claro en arena y crema: etiqueta `modo-claro-arena-20261022`.
+- Rotación ampliada y publicidad inferior izquierda: etiqueta `publicidad-productos-20261022`.
 - Copia completa anterior de la carpeta: `C:\laragon\backups\WEBMOYOALQUIMIA-antes-rediseno-20261022`.
 
-Para deshacer solo el tono arena del modo claro, con los cambios posteriores guardados:
+Para deshacer la publicidad y la ampliación del carrusel, con los cambios posteriores guardados:
+
+```powershell
+& 'C:\laragon\bin\git\bin\git.exe' revert publicidad-productos-20261022
+```
+
+Después, para deshacer también el tono arena del modo claro:
 
 ```powershell
 & 'C:\laragon\bin\git\bin\git.exe' revert modo-claro-arena-20261022
@@ -49,8 +56,14 @@ La paleta usa fondos arena, tarjetas crema, detalles salvia y acentos verde petr
 
 ## Escaparate y movimiento
 
-El escaparate combina hasta cuatro productos: primero los de mayor cantidad de unidades en pedidos pagados y no cancelados, siempre que sigan disponibles públicamente; después, los productos destacados del catálogo. Solo los primeros reciben la etiqueta de ventas. Los descuentos y precios salen del producto actual. No se generan compradores, ventas recientes ni cifras simuladas.
+El escaparate combina hasta ocho productos: primero los de mayor cantidad de unidades en pedidos pagados y no cancelados, siempre que sigan disponibles públicamente; después, una selección de las categorías activas, destacados y novedades del catálogo. Solo los primeros reciben la etiqueta de ventas. Los descuentos y precios salen del producto actual. No se generan compradores, ventas recientes ni cifras simuladas.
 
-El carrusel tiene anterior, siguiente, selección directa y pausa. Cambia cada siete segundos mientras está visible; se detiene al pasar el ratón, interactuar con el teclado, ocultar la pestaña o activar movimiento reducido. La navegación manual sigue funcionando con movimiento reducido. Sin JavaScript se muestra el primer producto con sus enlaces.
+El carrusel tiene anterior, siguiente, selección directa, pausa y un texto que indica su estado. Cambia cada seis segundos mientras está visible, incluso con el puntero encima; se detiene con el botón de pausa, al navegar con el teclado dentro del carrusel, ocultar la pestaña o activar movimiento reducido. Las flechas y los puntos usados con el ratón no desactivan la rotación automática. La navegación manual sigue funcionando con movimiento reducido. Sin JavaScript se muestra el primer producto con sus enlaces.
 
 La portada incorpora movimiento suave de la imagen original, una cuadrícula animada, iluminación en las categorías, entradas al desplazarse y una barra de progreso. Se respetan las preferencias de movimiento reducido. No se modifican los archivos de imagen ni los datos de productos o pedidos.
+
+## Publicidad de productos
+
+La tarjeta inferior izquierda empieza después de diez segundos. Muestra imagen, nombre, precio y enlace del producto. Usa «Producto vendido» solo para productos con pedidos pagados registrados; las demás tarjetas dicen «Producto destacado». No representa ventas en tiempo real ni muestra datos de compradores.
+
+La publicidad se muestra nueve segundos y deja una pausa de veintitrés segundos antes de la siguiente, con un máximo de cuatro tarjetas por carga. Se mantiene visible al interactuar con ella. Se puede cerrar y queda descartada durante la sesión de la pestaña, incluso al recargar. Con movimiento reducido solo aparece una tarjeta estática, cerrable. En celular su posición evita el botón de WhatsApp. Se comprobaron rotación, pausa, cierre, persistencia, etiquetas, cambio de producto, móvil y movimiento reducido en navegador.
