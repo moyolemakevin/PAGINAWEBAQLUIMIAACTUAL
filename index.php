@@ -38,6 +38,7 @@ $showCategoryDropdown = true;
 include __DIR__ . '/partials/navbar.php';
 ?>
 <main id="main-content">
+    <div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
     <section class="experience-hero" aria-labelledby="experience-title">
         <div class="experience-grid" aria-hidden="true"></div>
         <div class="container">
@@ -54,7 +55,10 @@ include __DIR__ . '/partials/navbar.php';
                 </div>
                 <div class="experience-showcase" data-category="<?= $escape($firstCategory['slug'] ?? '') ?>">
                     <div class="brand-visual">
+                        <span class="brand-scan" aria-hidden="true"></span>
                         <img src="<?= $escape($heroImage) ?>" alt="Moyoalquimia: software, aceites esenciales, figuras de yeso y suscripciones digitales" width="1024" height="1024" fetchpriority="high" decoding="async">
+                        <span class="brand-chip brand-chip-top" aria-hidden="true"><i class="fas fa-code"></i> Software a medida</span>
+                        <span class="brand-chip brand-chip-bottom" aria-hidden="true"><i class="fas fa-leaf"></i> Bienestar natural</span>
                     </div>
                     <div class="category-preview">
                         <span class="category-preview-icon"><i class="<?= $escape($firstCategory['icon']) ?>" data-category-icon aria-hidden="true"></i></span>
@@ -73,6 +77,8 @@ include __DIR__ . '/partials/navbar.php';
             <div class="experience-hero-bottom"><span>PRODUCTOS Y SERVICIOS</span><a href="#categorias">VER CATEGORÍAS <i class="fas fa-arrow-down" aria-hidden="true"></i></a><span>ASESORÍA POR WHATSAPP</span></div>
         </div>
     </section>
+
+    <?php include __DIR__ . '/partials/product-spotlight.php'; ?>
 
     <section class="experience-categories" id="categorias" aria-labelledby="categories-title">
         <div class="container">
