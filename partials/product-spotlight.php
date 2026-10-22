@@ -85,11 +85,10 @@ if (!$spotlightProducts) return;
     <a class="product-promotion-link" data-promo-link>
         <img data-promo-image alt="" width="72" height="80" decoding="async">
         <span class="product-promotion-copy">
-            <span class="product-promotion-label" data-promo-label></span>
+            <span class="product-promotion-status"><i class="fas fa-star" data-promo-icon aria-hidden="true"></i><span class="product-promotion-label" data-promo-label></span></span>
             <strong data-promo-name></strong>
-            <span class="product-promotion-price" data-promo-price></span>
             <span class="product-promotion-note" data-promo-note></span>
+            <span class="product-promotion-bottom"><span class="product-promotion-price" data-promo-price></span><span class="product-promotion-cta">Ver producto <span aria-hidden="true">↗</span></span></span>
         </span>
-        <span class="product-promotion-arrow" aria-hidden="true">↗</span>
     </a>
 </aside>

@@ -15,6 +15,11 @@
     const chatgptIndex = products.findIndex(product => /chat\s*gpt/i.test(product.name));
     if (chatgptIndex > 0) products.unshift(...products.splice(chatgptIndex, 1));
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const firstDelay = 2000;
+    const visibleDuration = 7000;
+    const betweenCards = 8000;
+    const preload = product => { const image = new Image(); image.src = product.image; };
+    preload(products[0]);
     let index = 0;
     let shown = 0;
     let timer = null;
@@ -37,7 +42,7 @@
             return;
         }
         promotion.hidden = true;
-        queue(23000);
+        queue(betweenCards);
     };
     function show() {
         if (dismissed || document.hidden) return;
@@ -50,11 +55,13 @@
         link.setAttribute('aria-label', `Ver ${product.name}`);
         promotion.querySelector('[data-promo-image]').src = product.image;
         promotion.querySelector('[data-promo-label]').textContent = product.sold ? 'Producto vendido' : 'Producto destacado';
+        promotion.querySelector('[data-promo-icon]').className = product.sold ? 'fas fa-circle-check' : 'fas fa-star';
         promotion.querySelector('[data-promo-name]').textContent = product.name;
-        promotion.querySelector('[data-promo-price]').textContent = `${product.price} · Ver producto ↗`;
-        promotion.querySelector('[data-promo-note]').textContent = product.sold ? 'Registrado en pedidos pagados de la tienda.' : 'Disponible en nuestro catálogo.';
+        promotion.querySelector('[data-promo-price]').textContent = product.price;
+        promotion.querySelector('[data-promo-note]').textContent = product.sold ? 'Un cliente compró este producto.' : 'Consulta disponibilidad y detalles.';
         promotion.hidden = false;
-        if (!motion.matches) timer = setTimeout(hideLater, 9000);
+        preload(products[index % products.length]);
+        if (!motion.matches) timer = setTimeout(hideLater, visibleDuration);
     }
     promotion.querySelector('[data-promo-close]').addEventListener('click', close);
     promotion.addEventListener('keydown', event => {
@@ -63,12 +70,12 @@
     document.addEventListener('visibilitychange', () => {
         clearTimeout(timer);
         promotion.hidden = true;
-        if (!document.hidden) queue(10000);
+        if (!document.hidden) queue(firstDelay);
     });
     motion.addEventListener('change', () => {
         clearTimeout(timer);
-        if (promotion.hidden) queue(10000);
-        else if (!motion.matches) timer = setTimeout(hideLater, 9000);
+        if (promotion.hidden) queue(firstDelay);
+        else if (!motion.matches) timer = setTimeout(hideLater, visibleDuration);
     });
-    queue(10000);
+    queue(firstDelay);
 })();

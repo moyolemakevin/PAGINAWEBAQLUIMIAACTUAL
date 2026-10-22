@@ -21,7 +21,14 @@ El modo oscuro es la opción inicial si no hay una preferencia guardada. El sele
 - Orden final del inicio y retirada del texto de rotación: etiqueta `inicio-ordenado-20261022`.
 - Catálogo completo, rotación más rápida y ChatGPT primero en publicidad: etiqueta `escaparate-completo-20261022`.
 - Inicio más compacto, fotos reales en categorías y pie móvil desplegable: etiqueta `inicio-compacto-20261022`.
+- Avisos de productos a los dos segundos y presentación de compras registradas: etiqueta `avisos-rapidos-20261022`.
 - Copia completa anterior de la carpeta: `C:\laragon\backups\WEBMOYOALQUIMIA-antes-rediseno-20261022`.
+
+Para deshacer únicamente la nueva presentación y velocidad de los avisos publicitarios:
+
+```powershell
+& 'C:\laragon\bin\git\bin\git.exe' revert avisos-rapidos-20261022
+```
 
 Para deshacer únicamente los ajustes de composición del inicio y el pie desplegable, conservando el modo oscuro inicial y las tarjetas compactas del catálogo:
 
@@ -119,11 +126,13 @@ La portada incorpora movimiento suave de la imagen original, una cuadrícula ani
 
 ## Publicidad de productos
 
-La tarjeta inferior izquierda empieza después de diez segundos. Muestra imagen, nombre, precio y enlace del producto. Usa «Producto vendido» solo para productos con pedidos pagados registrados; las demás tarjetas dicen «Producto destacado». No representa ventas en tiempo real ni muestra datos de compradores.
+La tarjeta inferior izquierda empieza después de dos segundos. Muestra imagen, nombre, precio destacado y un acceso «Ver producto». Usa «Producto vendido» y «Un cliente compró este producto» solo para productos con pedidos pagados registrados y no cancelados; las demás tarjetas dicen «Producto destacado» y «Consulta disponibilidad y detalles». La tarjeta incorpora un icono de confirmación para las ventas y una estrella para los destacados. No representa ventas en tiempo real ni muestra nombres, ubicaciones o momentos de compra de compradores.
 
 La primera tarjeta publicitaria prioriza ChatGPT cuando está disponible públicamente. La prioridad no altera el estado de venta: si no consta un pedido pagado, ChatGPT se presenta como producto destacado.
 
-La publicidad se muestra nueve segundos y deja una pausa de veintitrés segundos antes de la siguiente, con un máximo de cuatro tarjetas por carga. Se mantiene visible al interactuar con ella. Se puede cerrar y queda descartada durante la sesión de la pestaña, incluso al recargar. Con movimiento reducido solo aparece una tarjeta estática, cerrable. En celular su posición evita el botón de WhatsApp. Se comprobaron rotación, pausa, cierre, persistencia, etiquetas, cambio de producto, móvil y movimiento reducido en navegador.
+La publicidad se muestra siete segundos y deja una pausa de ocho segundos antes de la siguiente, con un máximo de cuatro tarjetas por carga. Se precarga la foto de la primera tarjeta y la siguiente. Se mantiene visible al interactuar con ella. Se puede cerrar con un botón de 44 px o con Escape y queda descartada durante la sesión de la pestaña, incluso al recargar. Con movimiento reducido solo aparece una tarjeta estática, cerrable. En celular su posición evita el botón de WhatsApp. Se comprobaron rotación, pausa, cierre, persistencia, etiquetas, cambio de producto, móvil y movimiento reducido en navegador.
+
+La comprobación `C:\laragon\backups\moyo-visual-checks-20261022\faster-promotions-check.cjs` verifica los intervalos de dos, siete y ocho segundos; ChatGPT primero; texto de compra solo para productos marcados por pedidos pagados; precios e iconos; ambos temas en cuatro tamaños; cierre persistente y movimiento reducido. Se comprobó también la primera imagen cargada y la tarjeta visible a los tres segundos con el reloj real del navegador.
 
 ## Correcciones de la auditoría visual
 
