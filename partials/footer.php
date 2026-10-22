@@ -77,7 +77,7 @@ $whatsappUrl = getSiteSetting('whatsapp_url', '');
     <div class="row justify-content-center">
       <div class="col-12 text-center">
         <p class="text-center text-muted mb-0">
-          Moyoalquimia
+          Hecho por Moyoalquimia
         </p>
       </div>
     </div>
