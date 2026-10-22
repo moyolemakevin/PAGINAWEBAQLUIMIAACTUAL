@@ -10,9 +10,16 @@ Los estilos nuevos están en `assets/css/experience.css`. Las interacciones de l
 - Rediseño terminado: etiqueta `rediseno-visual-20261022`.
 - Paleta clara y oscura en verde petróleo: etiqueta `paleta-clara-oscura-20261022`.
 - Escaparate de productos y movimiento: etiqueta `escaparate-interactivo-20261022`.
+- Modo claro en arena y crema: etiqueta `modo-claro-arena-20261022`.
 - Copia completa anterior de la carpeta: `C:\laragon\backups\WEBMOYOALQUIMIA-antes-rediseno-20261022`.
 
-Para deshacer el escaparate y los últimos efectos, con los cambios posteriores guardados, ejecutar desde la carpeta del proyecto:
+Para deshacer solo el tono arena del modo claro, con los cambios posteriores guardados:
+
+```powershell
+& 'C:\laragon\bin\git\bin\git.exe' revert modo-claro-arena-20261022
+```
+
+Después, para deshacer el escaparate y los efectos:
 
 ```powershell
 & 'C:\laragon\bin\git\bin\git.exe' revert escaparate-interactivo-20261022
@@ -38,7 +45,7 @@ Comprobados: sintaxis PHP y JavaScript; portada en 360, 390, 768 y 1440 px; imag
 
 Capturas y scripts de comprobación locales: `C:\laragon\backups\moyo-visual-checks-20261022`.
 
-La paleta usa fondos claros y acentos verde petróleo como presentación inicial. El modo oscuro cambia toda la portada, el menú, el pie y las superficies del catálogo. El botón superior conserva la preferencia al recargar y navegar. Se mantuvo la imagen original. Se verificaron ambos modos en escritorio y en 360, 390 y 768 px, el menú móvil y el contraste de las superficies y textos principales de la portada y las tarjetas del catálogo.
+La paleta usa fondos arena, tarjetas crema, detalles salvia y acentos verde petróleo como presentación inicial. El modo oscuro conserva sus tonos azul verdoso y menta. El cambio de paleta afecta la portada, el menú, el pie y las superficies del catálogo. El botón superior conserva la preferencia al recargar y navegar. Se mantuvo la imagen original. Se verificaron ambos modos en escritorio y en 360, 390 y 768 px, el menú móvil y el contraste de las superficies y textos principales de la portada y las tarjetas del catálogo.
 
 ## Escaparate y movimiento
 

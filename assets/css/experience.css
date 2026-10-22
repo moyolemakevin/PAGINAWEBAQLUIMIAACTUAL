@@ -1,21 +1,21 @@
 /* Moyo Alquimia — shared visual language. The original stylesheet stays intact. */
 :root {
     color-scheme: light;
-    --moyo-bg: #f8faf8;
-    --moyo-panel: #ffffff;
-    --moyo-panel-alt: #edf4f0;
+    --moyo-bg: #e9dfce;
+    --moyo-panel: #f2e9da;
+    --moyo-panel-alt: #ded2bf;
     --moyo-text: #193d39;
-    --moyo-muted: #526d68;
-    --moyo-faint: #637a75;
+    --moyo-muted: #435c54;
+    --moyo-faint: #506359;
     --moyo-accent: #176c62;
     --moyo-accent-hover: #10554d;
-    --moyo-accent-soft: #deeee7;
+    --moyo-accent-soft: #d4ddc8;
     --moyo-button-text: #ffffff;
-    --moyo-line: rgba(30, 82, 70, .16);
-    --moyo-nav: rgba(248, 250, 248, .96);
-    --moyo-hero: radial-gradient(ellipse at 82% 40%, #d9eae0 0%, transparent 65%), #f8faf8;
-    --moyo-contact: linear-gradient(115deg, #e7f1eb, #f2f5eb);
-    --moyo-shadow: 0 18px 55px #244c3d14;
+    --moyo-line: rgba(77, 73, 48, .19);
+    --moyo-nav: rgba(233, 223, 206, .96);
+    --moyo-hero: radial-gradient(ellipse at 82% 40%, #cad6bd 0%, transparent 65%), #e9dfce;
+    --moyo-contact: linear-gradient(115deg, #d5ddc5, #ead8bc);
+    --moyo-shadow: 0 18px 55px #59452e17;
     --moyo-grid: rgba(30, 82, 70, .035);
     --moyo-number: rgba(30, 82, 70, .09);
     --moyo-software: #246c85;
