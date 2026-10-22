@@ -13,9 +13,16 @@ Los estilos nuevos están en `assets/css/experience.css`. Las interacciones de l
 - Modo claro en arena y crema: etiqueta `modo-claro-arena-20261022`.
 - Rotación ampliada y publicidad inferior izquierda: etiqueta `publicidad-productos-20261022`.
 - Paleta gris azulada y tipografía más legible: etiqueta `paleta-legible-20261022`.
+- Correcciones de superposición, contraste y composición: etiqueta `correcciones-visuales-20261022`.
 - Copia completa anterior de la carpeta: `C:\laragon\backups\WEBMOYOALQUIMIA-antes-rediseno-20261022`.
 
-Para deshacer el último ajuste de paleta y tamaños de texto, con los cambios posteriores guardados:
+Para deshacer únicamente las últimas correcciones visuales, con los cambios posteriores guardados:
+
+```powershell
+& 'C:\laragon\bin\git\bin\git.exe' revert correcciones-visuales-20261022
+```
+
+Después, para deshacer también el ajuste de paleta y tamaños de texto:
 
 ```powershell
 & 'C:\laragon\bin\git\bin\git.exe' revert paleta-legible-20261022
@@ -76,3 +83,13 @@ La portada incorpora movimiento suave de la imagen original, una cuadrícula ani
 La tarjeta inferior izquierda empieza después de diez segundos. Muestra imagen, nombre, precio y enlace del producto. Usa «Producto vendido» solo para productos con pedidos pagados registrados; las demás tarjetas dicen «Producto destacado». No representa ventas en tiempo real ni muestra datos de compradores.
 
 La publicidad se muestra nueve segundos y deja una pausa de veintitrés segundos antes de la siguiente, con un máximo de cuatro tarjetas por carga. Se mantiene visible al interactuar con ella. Se puede cerrar y queda descartada durante la sesión de la pestaña, incluso al recargar. Con movimiento reducido solo aparece una tarjeta estática, cerrable. En celular su posición evita el botón de WhatsApp. Se comprobaron rotación, pausa, cierre, persistencia, etiquetas, cambio de producto, móvil y movimiento reducido en navegador.
+
+## Correcciones de la auditoría visual
+
+- `assets/js/floating-ui.js` protege los controles de la página: la publicidad y WhatsApp se ocultan temporalmente si su posición tapa botones o enlaces de acción y vuelven al quedar libres. Se reprodujeron los dos fallos originales y se verificó el elemento que recibe el clic, incluyendo el carrito.
+- Las etiquetas de categoría del catálogo tienen fondo y texto acordes al tema, sin opacidad que reduzca el contraste. El selector de lista/cuadrícula usa el acento de la marca y mantiene ambos botones alineados.
+- La portada tiene menos altura y elementos repetidos. En móvil se conserva la imagen completa, en un tamaño más compacto. Los productos destacados aparecen antes de las categorías. A 390 px, los destacados pasan de unos 4.028 px a 1.865 px desde el comienzo de la página.
+- Los resúmenes del escaparate y del catálogo parten de la descripción completa y se acortan por palabras. La base de datos permanece intacta. Se retiraron los mínimos de altura individuales que dejaban huecos entre nombre, descripción y precio del escaparate.
+- Las imágenes mantienen su contenido completo dentro de marcos con espaciado uniforme. No se modificaron los archivos originales.
+
+Verificados 360, 390, 768, 1024, 1366 y 1440 px sin desbordamiento horizontal; cabecera alineada; carrito; ambas vistas del catálogo y carga adicional de productos; contraste de etiquetas superior a 4,5:1 en ambos modos. Sin errores JavaScript durante las pruebas. Capturas y mediciones: `C:\laragon\backups\moyo-visual-checks-20261022\correcciones`.

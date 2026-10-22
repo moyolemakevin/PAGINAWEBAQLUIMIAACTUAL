@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/config/bootstrap.php';
+require_once __DIR__ . '/partials/product-summary.php';
 
 $product = new Product();
 $category = new Category();
@@ -162,10 +163,10 @@ include __DIR__ . '/partials/navbar.php';
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="btn-group" role="group" data-aos="fade-left">
-                        <button type="button" class="btn btn-outline-primary active" id="grid-view">
+                        <button type="button" class="btn btn-outline-primary active" id="grid-view" aria-label="Ver productos en cuadrícula" aria-pressed="true">
                             <i class="fas fa-th-large"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-primary" id="list-view">
+                        <button type="button" class="btn btn-outline-primary" id="list-view" aria-label="Ver productos en lista" aria-pressed="false">
                             <i class="fas fa-list"></i>
                         </button>
                     </div>
@@ -223,7 +224,7 @@ include __DIR__ . '/partials/navbar.php';
                                 </div>
                                 <div class="card-body">
                                     <div class="mb-2">
-                                        <span class="badge bg-primary opacity-75 text-white">
+                                        <span class="badge catalog-category-badge">
                                             <?php 
                                             $productCategory = array_filter($categories, function($cat) use ($prod) {
                                                 return $cat['id'] == $prod['category_id'];
@@ -235,7 +236,7 @@ include __DIR__ . '/partials/navbar.php';
                                     </div>
                                     <h5 class="card-title mb-2"><?php echo htmlspecialchars($prod['name']); ?></h5>
                                     <p class="card-text text-muted small mb-3">
-                                        <?php echo substr(htmlspecialchars($prod['description']), 0, 100); ?>...
+                                        <?php echo htmlspecialchars(getProductSummary($prod, 140), ENT_QUOTES, 'UTF-8'); ?>
                                     </p>
                                     
                                     <!-- Rating -->
@@ -522,8 +523,15 @@ include __DIR__ . '/partials/navbar.php';
 
                     const name = product.name || 'Producto';
                     const categoryName = product.category_name || 'General';
-                    const description = product.short_description || product.description || '';
-                    const truncatedDescription = description.length > 100 ? description.substring(0, 100) + '...' : description;
+                    const description = String(product.description || product.short_description || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                    const words = description.split(' ');
+                    let truncatedDescription = '';
+                    for (const word of words) {
+                        const next = truncatedDescription ? truncatedDescription + ' ' + word : word;
+                        if (truncatedDescription && next.length > 140) break;
+                        truncatedDescription = next;
+                    }
+                    if (truncatedDescription.length < description.length) truncatedDescription = truncatedDescription.replace(/[ ,;:]+$/, '') + '…';
 
                     const discountBadge = discountPercentage > 0
                         ? '<span class="badge bg-danger position-absolute top-0 start-0 m-2 pulse">-' + discountPercentage + '%</span>'
@@ -565,7 +573,7 @@ include __DIR__ . '/partials/navbar.php';
                             </div>
                             <div class="card-body">
                                 <div class="mb-2">
-                                    <span class="badge bg-primary opacity-75 text-white">${escapeHtml(categoryName)}</span>
+                                    <span class="badge catalog-category-badge">${escapeHtml(categoryName)}</span>
                                 </div>
                                 <h5 class="card-title mb-2">${escapeHtml(name)}</h5>
                                 <p class="card-text text-muted small mb-3">${escapeHtml(truncatedDescription)}</p>
@@ -729,6 +737,8 @@ include __DIR__ . '/partials/navbar.php';
                     });
                     gridView.classList.add('active');
                     listView.classList.remove('active');
+                    gridView.setAttribute('aria-pressed', 'true');
+                    listView.setAttribute('aria-pressed', 'false');
                 });
 
                 listView.addEventListener('click', function() {
@@ -737,6 +747,8 @@ include __DIR__ . '/partials/navbar.php';
                     });
                     listView.classList.add('active');
                     gridView.classList.remove('active');
+                    listView.setAttribute('aria-pressed', 'true');
+                    gridView.setAttribute('aria-pressed', 'false');
                 });
             }
 

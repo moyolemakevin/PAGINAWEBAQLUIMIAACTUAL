@@ -46,7 +46,7 @@ include __DIR__ . '/partials/navbar.php';
                 <div class="experience-intro">
                     <p class="experience-eyebrow"><span class="status-dot"></span> PRODUCTOS Y SERVICIOS · MOYOALQUIMIA</p>
                     <h1 id="experience-title">Innovación.<br>Bienestar.<br><span>Creatividad.</span></h1>
-                    <p class="experience-lead">Software a medida, aceites esenciales, maceteros de yeso y suscripciones digitales. Encuentra lo que necesitas, con asesoría directa.</p>
+                    <p class="experience-lead">Software a medida, aceites esenciales, maceteros de yeso y suscripciones digitales. Te asesoramos para elegir.</p>
                     <div class="experience-actions">
                         <a class="experience-button experience-button-primary" href="products.php">Explorar el catálogo <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                         <a class="experience-text-link" href="#categorias">Ver categorías <span aria-hidden="true">↗</span></a>
@@ -80,25 +80,9 @@ include __DIR__ . '/partials/navbar.php';
 
     <?php include __DIR__ . '/partials/product-spotlight.php'; ?>
 
-    <section class="experience-categories" id="categorias" aria-labelledby="categories-title">
+    <section class="experience-featured" id="destacados" aria-labelledby="featured-title">
         <div class="container">
-            <div class="experience-section-heading"><div><p class="experience-eyebrow">01 / NUESTRAS CATEGORÍAS</p><h2 id="categories-title">Lo que necesitas,<br><span>en un solo lugar.</span></h2></div><p>Soluciones digitales, bienestar y decoración.<br class="d-none d-md-block"> Elige una categoría para conocer nuestros productos.</p></div>
-            <div class="categories-mosaic">
-                <?php foreach ($catalogCategories as $categoryIndex => $catalogCategory): ?>
-                <a class="category-tile category-tile-<?= $escape($catalogCategory['slug']) ?>" href="<?= $escape($catalogCategory['url']) ?>">
-                    <div class="category-tile-top"><span><?= str_pad((string) ($categoryIndex + 1), 2, '0', STR_PAD_LEFT) ?> / <?= $escape($catalogCategory['eyebrow']) ?></span><span class="category-tile-arrow" aria-hidden="true">↗</span></div>
-                    <div class="category-art" aria-hidden="true"><div class="category-art-orbit"></div><i class="<?= $escape($catalogCategory['icon']) ?>"></i><span class="category-art-point"></span></div>
-                    <div class="category-tile-content"><h3><?= $escape($catalogCategory['name']) ?></h3><p><?= $escape($catalogCategory['summary']) ?></p><span class="category-tile-cta">Explorar colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span></div>
-                </a>
-                <?php endforeach; ?>
-                <?php if (!$catalogCategories): ?><p>Estamos preparando nuevas colecciones. <a href="<?= $escape($whatsappUrl) ?>">Escríbenos para conocer más.</a></p><?php endif; ?>
-            </div>
-        </div>
-    </section>
-
-    <section class="experience-featured" aria-labelledby="featured-title">
-        <div class="container">
-            <div class="experience-section-heading"><div><p class="experience-eyebrow">02 / PRODUCTOS DESTACADOS</p><h2 id="featured-title">Una selección<br><span>para empezar.</span></h2></div><a class="experience-text-link" href="products.php">Ver todo el catálogo <span aria-hidden="true">↗</span></a></div>
+            <div class="experience-section-heading"><div><p class="experience-eyebrow">01 / PRODUCTOS DESTACADOS</p><h2 id="featured-title">Una selección<br><span>para empezar.</span></h2></div><a class="experience-text-link" href="products.php">Ver todo el catálogo <span aria-hidden="true">↗</span></a></div>
             <div class="experience-product-grid">
                 <?php foreach ($featuredProducts as $item):
                     $image = Product::getImagePath($item) ?: 'assets/images/placeholder.jpg';
@@ -116,6 +100,22 @@ include __DIR__ . '/partials/navbar.php';
                 </article>
                 <?php endforeach; ?>
                 <?php if (!$featuredProducts): ?><p>Explora nuestras categorías o <a href="<?= $escape($whatsappUrl) ?>">consulta los productos disponibles</a>.</p><?php endif; ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-categories" id="categorias" aria-labelledby="categories-title">
+        <div class="container">
+            <div class="experience-section-heading"><div><p class="experience-eyebrow">02 / NUESTRAS CATEGORÍAS</p><h2 id="categories-title">Lo que necesitas,<br><span>en un solo lugar.</span></h2></div><p>Soluciones digitales, bienestar y decoración.<br class="d-none d-md-block"> Elige una categoría para conocer nuestros productos.</p></div>
+            <div class="categories-mosaic">
+                <?php foreach ($catalogCategories as $categoryIndex => $catalogCategory): ?>
+                <a class="category-tile category-tile-<?= $escape($catalogCategory['slug']) ?>" href="<?= $escape($catalogCategory['url']) ?>">
+                    <div class="category-tile-top"><span><?= str_pad((string) ($categoryIndex + 1), 2, '0', STR_PAD_LEFT) ?> / <?= $escape($catalogCategory['eyebrow']) ?></span><span class="category-tile-arrow" aria-hidden="true">↗</span></div>
+                    <div class="category-art" aria-hidden="true"><div class="category-art-orbit"></div><i class="<?= $escape($catalogCategory['icon']) ?>"></i><span class="category-art-point"></span></div>
+                    <div class="category-tile-content"><h3><?= $escape($catalogCategory['name']) ?></h3><p><?= $escape($catalogCategory['summary']) ?></p><span class="category-tile-cta">Explorar colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span></div>
+                </a>
+                <?php endforeach; ?>
+                <?php if (!$catalogCategories): ?><p>Estamos preparando nuevas colecciones. <a href="<?= $escape($whatsappUrl) ?>">Escríbenos para conocer más.</a></p><?php endif; ?>
             </div>
         </div>
     </section>

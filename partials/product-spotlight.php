@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/product-summary.php';
 // Paid orders are the only source of sales claims; featured products fill the rest.
 $spotlightProducts = [];
 try {
@@ -48,11 +49,7 @@ if (!$spotlightProducts) return;
                 $spotlightDiscount = (float) ($spotlightItem['discount_percentage'] ?? 0);
                 $spotlightPrice = (float) $spotlightItem['price'] * (1 - $spotlightDiscount / 100);
                 $spotlightUrl = 'product.php?id=' . (int) $spotlightItem['id'];
-                $spotlightDescription = trim(strip_tags((string) ($spotlightItem['short_description'] ?? '')));
-                $spotlightDescription = trim(preg_replace('/[?？]{2,}/u', '', $spotlightDescription));
-                if ($spotlightDescription === '') {
-                    $spotlightDescription = 'Conoce sus características y consulta los detalles antes de realizar tu pedido.';
-                }
+                $spotlightDescription = getProductSummary($spotlightItem, 180);
             ?>
                 <article class="spotlight-slide" data-spotlight-slide data-product-sold="<?= !empty($spotlightItem['spotlight_sold']) ? 'true' : 'false' ?>" role="group" aria-roledescription="diapositiva" aria-label="<?= $spotlightIndex + 1 ?> de <?= count($spotlightProducts) ?>" <?= $spotlightIndex ? 'hidden' : '' ?>>
                     <a href="<?= $escape($spotlightUrl) ?>" class="spotlight-image" aria-label="Ver <?= $escape($spotlightItem['name']) ?>">
