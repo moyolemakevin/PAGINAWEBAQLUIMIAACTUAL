@@ -77,7 +77,7 @@ $whatsappUrl = getSiteSetting('whatsapp_url', '');
     <div class="row justify-content-center">
       <div class="col-12 text-center">
         <p class="text-center text-muted mb-0">
-          &copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($siteName); ?>. Desde Ecuador, con esencia propia. Todos los derechos reservados.
+          Moyoalquimia
         </p>
       </div>
     </div>
