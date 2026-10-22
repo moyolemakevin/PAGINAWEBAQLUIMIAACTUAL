@@ -395,6 +395,7 @@ body.catalog-page, body.product-page { background: var(--moyo-panel-alt); }
 .spotlight-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 15px; border-top: 1px solid var(--moyo-line); padding: 12px 24px; }
 .spotlight-dots { display: flex; gap: 3px; }
 .spotlight-dots button { width: 32px; height: 32px; display: grid; place-items: center; background: transparent; border: 0; padding: 0; border-radius: 50%; }
+.spotlight-dots button[hidden] { display: none; }
 .spotlight-dots button span { display: block; width: 6px; height: 6px; border-radius: 5px; background: var(--moyo-faint); opacity: .4; transition: width .25s, opacity .25s; }
 .spotlight-dots button[aria-current="true"] span { width: 21px; background: var(--moyo-accent); opacity: 1; }
 .spotlight-navigation { display: flex; align-items: center; gap: 8px; }

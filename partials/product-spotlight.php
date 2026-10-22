@@ -21,15 +21,14 @@ try {
 } catch (PDOException $e) {
     error_log('Product spotlight: sales ranking unavailable');
 }
-// Include different product lines instead of repeating only the featured selection.
-$spotlightCandidates = [];
-foreach ($categories as $spotlightCategory) {
-    $categoryProducts = $productModel->getProductsByCategory((int) $spotlightCategory['id'], 1, 0, true);
-    $spotlightCandidates = array_merge($spotlightCandidates, $categoryProducts);
+// Include the full public catalog, starting with a mix of product lines.
+$spotlightCatalog = $productModel->getAllProducts(null, 0, true);
+$spotlightCategorySamples = [];
+foreach ($spotlightCatalog as $catalogItem) {
+    $spotlightCategorySamples[$catalogItem['category_id']] ??= $catalogItem;
 }
-$spotlightCandidates = array_merge($spotlightCandidates, $featuredProducts, $productModel->getAllProducts(8, 0, true));
+$spotlightCandidates = array_merge(array_values($spotlightCategorySamples), $featuredProducts, $spotlightCatalog);
 foreach ($spotlightCandidates as $featured) {
-    if (count($spotlightProducts) >= 8) break;
     if (!isset($spotlightProducts[(int) $featured['id']])) {
         $featured['spotlight_label'] = (float) ($featured['discount_percentage'] ?? 0) > 0 ? 'Precio con descuento' : 'Selección Moyoalquimia';
         $featured['spotlight_note'] = 'Producto destacado de nuestro catálogo.';

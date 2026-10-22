@@ -104,7 +104,12 @@
     const setSlide = index => {
         current = (index + slides.length) % slides.length;
         slides.forEach((slide, i) => { slide.hidden = i !== current; });
-        dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === current)));
+        const visibleDots = Math.min(7, slides.length);
+        const firstDot = Math.max(0, Math.min(current - Math.floor(visibleDots / 2), slides.length - visibleDots));
+        dots.forEach((dot, i) => {
+            dot.setAttribute('aria-current', String(i === current));
+            dot.hidden = i < firstDot || i >= firstDot + visibleDots;
+        });
         carousel.querySelector('[data-spotlight-count]').textContent = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
         const nextImage = slides[(current + 1) % slides.length].querySelector('img');
         if (nextImage) nextImage.loading = 'eager';
@@ -118,7 +123,7 @@
         playButton.setAttribute('aria-label', pausedByUser ? 'Reanudar carrusel' : 'Pausar carrusel');
         playButton.querySelector('i').className = `fas fa-${pausedByUser ? 'play' : 'pause'}`;
         liveRegion.setAttribute('aria-live', stopped ? 'polite' : 'off');
-        if (!stopped) timer = setInterval(() => setSlide(current + 1), 6000);
+        if (!stopped) timer = setInterval(() => setSlide(current + 1), 3000);
     };
     const choose = index => {
         syncRotation();

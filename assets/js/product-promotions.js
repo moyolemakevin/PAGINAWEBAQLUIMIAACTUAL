@@ -12,6 +12,8 @@
         price: slide.querySelector('.spotlight-price > span').textContent.trim()
     }));
     if (!products.length) return;
+    const chatgptIndex = products.findIndex(product => /chat\s*gpt/i.test(product.name));
+    if (chatgptIndex > 0) products.unshift(...products.splice(chatgptIndex, 1));
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let index = 0;
     let shown = 0;
