@@ -1,335 +1,129 @@
 <?php
 require_once __DIR__ . '/config/bootstrap.php';
-
-$product = new Product();
-$category = new Category();
-
-$featuredProducts = $product->getFeaturedProducts(8, true);
-foreach ($featuredProducts as &$fp) {
-    $fp['image'] = Product::getImagePath($fp);
-}
-unset($fp);
-
-$categories = $category->getCategoriesWithProductCount(true);
+$productModel = new Product();
+$categoryModel = new Category();
+$featuredProducts = $productModel->getFeaturedProducts(8, true);
+$categories = $categoryModel->getCategoriesWithProductCount(true);
 $heroImage = assetUrl(getSafeSiteImageSetting('hero_image_url', 'assets/images/placeholder.jpg'));
-$catalogWhatsappUrl = 'https://wa.me/593983015307?text=Hola%2C%20quiero%20asesoria%20sobre%20el%20catalogo%20de%20Moyoalquimia';
+$escape = static function ($value) { return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8'); };
+$whatsappUrl = 'https://wa.me/593983015307?text=' . rawurlencode('Hola, quiero asesoría sobre el catálogo de Moyoalquimia');
+$catalogCategories = [];
+foreach ($categories as $cat) {
+    $presentation = getCategoryPresentation($cat['slug'] ?? '', $cat['name']);
+    $catalogCategories[] = array_merge($cat, $presentation, ['url' => 'category.php?slug=' . rawurlencode($cat['slug'])]);
+}
+$firstCategory = $catalogCategories[0] ?? ['name' => 'Moyoalquimia', 'icon' => 'fas fa-flask', 'summary' => 'Tecnología, bienestar y creatividad para transformar tu día.', 'url' => 'products.php'];
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SITE_NAME; ?> - Catalogo digital y productos destacados</title>
-    <meta name="description" content="Catalogo permanente de software, aceites esenciales, maceteros de yeso y suscripciones digitales en Moyoalquimia.">
-
+    <title>Moyoalquimia — Tecnología, bienestar y creatividad</title>
+    <meta name="description" content="Software a medida, aceites esenciales, maceteros de yeso y suscripciones digitales. Consulta nuestro catálogo y recibe asesoría directa en Moyoalquimia.">
+    <meta name="theme-color" content="#080d17">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="<?php echo assetUrl('assets/css/style.css'); ?>" rel="stylesheet">
-    <link rel="icon" href="<?php echo assetUrl(getSafeSiteImageSetting('favicon_url', 'assets/images/favicon.jpeg')); ?>">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="<?= assetUrl('assets/css/style.css') ?>" rel="stylesheet">
+    <link href="<?= assetUrl('assets/css/experience.css') ?>" rel="stylesheet">
+    <link rel="icon" href="<?= assetUrl(getSafeSiteImageSetting('favicon_url', 'assets/images/favicon.jpeg')) ?>">
 </head>
-<body class="home-page">
-    <?php
-    $currentPage = 'index';
-    $showCategoryDropdown = true;
-    include __DIR__ . '/partials/navbar.php';
-    ?>
+<body class="home-page experience-home">
+<?php
+$currentPage = 'index';
+$showCategoryDropdown = true;
+include __DIR__ . '/partials/navbar.php';
+?>
 <main id="main-content">
-
-    <section class="hero-section">
-        <div class="particles" id="particles"></div>
+    <section class="experience-hero" aria-labelledby="experience-title">
+        <div class="experience-grid" aria-hidden="true"></div>
         <div class="container">
-            <div class="row align-items-center g-5 hero-row">
-                <div class="col-12 col-lg-6 hero-content" data-aos="fade-right" data-aos-duration="1000">
-                    <h1 class="hero-title mb-4">
-                        Transforma tu Mundo con
-                        <span class="hero-title-line">
-                            Moyoalquimia
-                        </span>
-                    </h1>
-                    <p class="hero-subtitle mb-4">
-                        &#128640; Descubre productos &uacute;nicos y servicios innovadores que elevar&aacute;n tu estilo de vida.
-                        Desde tecnolog&iacute;a de vanguardia hasta aceites esenciales premium, tenemos todo lo que
-                        necesitas para vivir mejor.
-                    </p>
-                    <div class="d-flex flex-wrap gap-3 hero-actions">
-                        <a href="products.php" class="btn btn-primary btn-lg hover-lift">
-                            <i class="fas fa-shopping-bag me-2"></i>
-                            Ver catalogo
-                        </a>
-                        <a href="<?php echo htmlspecialchars($catalogWhatsappUrl, ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-outline-light btn-lg hover-lift" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-whatsapp me-2"></i>
-                            Hablar por WhatsApp
-                        </a>
+            <div class="experience-hero-layout">
+                <div class="experience-intro">
+                    <p class="experience-eyebrow"><span class="status-dot"></span> PRODUCTOS Y SERVICIOS · MOYOALQUIMIA</p>
+                    <h1 id="experience-title">Innovación.<br>Bienestar.<br><span>Creatividad.</span></h1>
+                    <p class="experience-lead">Software a medida, aceites esenciales, maceteros de yeso y suscripciones digitales. Encuentra lo que necesitas, con asesoría directa.</p>
+                    <div class="experience-actions">
+                        <a class="experience-button experience-button-gold" href="products.php">Explorar el catálogo <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        <a class="experience-text-link" href="#categorias">Ver categorías <span aria-hidden="true">↗</span></a>
                     </div>
+                    <div class="experience-signature"><span class="signature-line"></span> Atención personalizada desde Ecuador.</div>
                 </div>
-
-                <div class="col-12 col-lg-6 hero-image text-center" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-                    <img src="<?php echo htmlspecialchars($heroImage, ENT_QUOTES, 'UTF-8'); ?>"
-                         alt="Imagen principal de Moyoalquimia"
-                         class="img-fluid">
+                <div class="experience-showcase" data-category="<?= $escape($firstCategory['slug'] ?? '') ?>">
+                    <div class="brand-visual">
+                        <img src="<?= $escape($heroImage) ?>" alt="Moyoalquimia: software, aceites esenciales, figuras de yeso y suscripciones digitales" width="1024" height="1024" fetchpriority="high" decoding="async">
+                    </div>
+                    <div class="category-preview">
+                        <span class="category-preview-icon"><i class="<?= $escape($firstCategory['icon']) ?>" data-category-icon aria-hidden="true"></i></span>
+                        <div aria-live="polite" aria-atomic="true"><span class="category-preview-kicker">EXPLORA POR CATEGORÍA</span><h2 data-category-name><?= $escape($firstCategory['name']) ?></h2><p data-category-summary><?= $escape($firstCategory['summary']) ?></p></div>
+                        <a href="<?= $escape($firstCategory['url']) ?>" data-category-link aria-label="Explorar <?= $escape($firstCategory['name']) ?>"><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                    <?php if (count($catalogCategories) > 1): ?>
+                    <div class="category-selectors" role="group" aria-label="Elige una categoría">
+                        <?php foreach ($catalogCategories as $categoryIndex => $catalogCategory): ?>
+                        <button type="button" class="category-selector" aria-pressed="<?= $categoryIndex === 0 ? 'true' : 'false' ?>" data-category-choice="<?= $escape(json_encode(['name' => $catalogCategory['name'], 'summary' => $catalogCategory['summary'], 'icon' => $catalogCategory['icon'], 'url' => $catalogCategory['url'], 'slug' => $catalogCategory['slug']], JSON_UNESCAPED_UNICODE)) ?>"><i class="<?= $escape($catalogCategory['icon']) ?>" aria-hidden="true"></i><span><?= $escape($catalogCategory['name']) ?></span></button>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
+            <div class="experience-hero-bottom"><span>PRODUCTOS Y SERVICIOS</span><a href="#categorias">VER CATEGORÍAS <i class="fas fa-arrow-down" aria-hidden="true"></i></a><span>ASESORÍA POR WHATSAPP</span></div>
         </div>
     </section>
 
-    <section class="section" id="categories">
+    <section class="experience-categories" id="categorias" aria-labelledby="categories-title">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="section-title text-gradient" data-aos="fade-up">
-                        Categorias principales
-                    </h2>
-                </div>
-            </div>
-
-            <div class="row">
-                <?php $delay = 100; ?>
-                <?php foreach ($categories as $cat): ?>
-                    <?php
-                    $categorySlug = $cat['slug'] ?? '';
-                    $categoryUrl = 'category.php?slug=' . urlencode($categorySlug);
-                    $categoryUi = getCategoryPresentation($categorySlug, $cat['name'] ?? 'Categoria');
-                    ?>
-                    <div class="col-lg-3 col-md-6 mb-4" data-aos="zoom-in" data-aos-delay="<?php echo $delay; ?>">
-                        <div class="category-card h-100 text-center p-4 hover-lift"
-                             data-category-url="<?php echo htmlspecialchars($categoryUrl, ENT_QUOTES, 'UTF-8'); ?>"
-                             tabindex="0">
-                            <div class="category-icon mx-auto mb-3" style="background: var(--<?php echo htmlspecialchars($categoryUi['gradient'], ENT_QUOTES, 'UTF-8'); ?>);">
-                                <i class="<?php echo htmlspecialchars($categoryUi['icon'], ENT_QUOTES, 'UTF-8'); ?>"></i>
-                            </div>
-                            <h4 class="fw-bold mb-3"><?php echo htmlspecialchars($cat['name'], ENT_QUOTES, 'UTF-8'); ?></h4>
-                            <a href="<?php echo htmlspecialchars($categoryUrl, ENT_QUOTES, 'UTF-8'); ?>"
-                               class="btn btn-outline-primary"
-                               data-category-link="true">
-                                <i class="fas fa-arrow-right me-2"></i>
-                                Ver categoria
-                            </a>
-                        </div>
-                    </div>
-                    <?php $delay += 100; ?>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
-    <section class="section bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="section-title text-gradient" data-aos="fade-up">
-                        Productos destacados
-                    </h2>
-                </div>
-            </div>
-
-            <div class="row">
-                <?php $productDelay = 100; ?>
-                <?php foreach ($featuredProducts as $product): ?>
-                    <?php $finalPrice = (isset($product['discount_percentage']) && $product['discount_percentage'] > 0) ? $product['price'] * (1 - $product['discount_percentage'] / 100) : $product['price']; ?>
-                    <div class="col-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="<?php echo $productDelay; ?>">
-                        <div class="product-card h-100 hover-lift">
-                            <div class="product-image">
-                                <img src="<?php echo htmlspecialchars($product['image'] ?: 'assets/images/placeholder.jpg', ENT_QUOTES, 'UTF-8'); ?>"
-                                     alt="<?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?>"
-                                     class="img-fluid"
-                                     loading="lazy"
-                                     onerror="this.src='assets/images/placeholder.jpg';">
-                                <div class="product-overlay">
-                                    <button class="btn btn-light btn-sm me-2 hover-glow" onclick="addToCart(<?php echo (int) $product['id']; ?>, '<?php echo addslashes($product['name']); ?>', <?php echo $finalPrice; ?>, '<?php echo $product['image'] ?: 'assets/images/placeholder.jpg'; ?>')">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </button>
-                                    <button class="btn btn-light btn-sm hover-glow">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
-                                </div>
-                                <?php if (isset($product['discount_percentage']) && $product['discount_percentage'] > 0): ?>
-                                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
-                                        -<?php echo $product['discount_percentage']; ?>%
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title"><?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?></h5>
-                                <p class="card-text"><?php echo htmlspecialchars(substr((string) $product['description'], 0, 100), ENT_QUOTES, 'UTF-8'); ?>...</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="price">
-                                        <?php if (isset($product['discount_percentage']) && $product['discount_percentage'] > 0): ?>
-                                            <span class="text-decoration-line-through text-muted me-2">
-                                                $<?php echo number_format($product['price'], 2, ',', '.'); ?>
-                                            </span>
-                                            <span class="text-success fw-bold">
-                                                $<?php echo number_format($product['price'] * (1 - $product['discount_percentage'] / 100), 2, ',', '.'); ?>
-                                            </span>
-                                        <?php else: ?>
-                                            <span class="fw-bold">$<?php echo number_format($product['price'], 2, ',', '.'); ?></span>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="rating">
-                                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                                            <i class="fas fa-star text-warning"></i>
-                                        <?php endfor; ?>
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-2 mt-3">
-                                    <button class="btn btn-primary btn-sm flex-fill hover-lift" onclick="addToCart(<?php echo (int) $product['id']; ?>, '<?php echo addslashes($product['name']); ?>', <?php echo $finalPrice; ?>, '<?php echo $product['image'] ?: 'assets/images/placeholder.jpg'; ?>')">
-                                        <i class="fas fa-cart-plus me-1"></i>
-                                        Carrito
-                                    </button>
-                                    <a href="https://wa.me/593983015307?text=Hola%2C%20quiero%20comprar%20el%20producto:%20<?php echo urlencode($product['name']); ?>%20-%20$<?php echo number_format((isset($product['discount_percentage']) && $product['discount_percentage'] > 0) ? $product['price'] * (1 - $product['discount_percentage'] / 100) : $product['price'], 2, ',', '.'); ?>%20-%20Moyoalquimia"
-                                       class="btn btn-success btn-sm flex-fill hover-lift"
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       title="Comprar por WhatsApp">
-                                        <i class="fab fa-whatsapp"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php $productDelay += 100; ?>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="text-center mt-5" data-aos="fade-up">
-                <a href="products.php" class="btn btn-primary btn-lg hover-lift">
-                    <i class="fas fa-th-large me-2"></i>
-                    Ver todo el catalogo
+            <div class="experience-section-heading"><div><p class="experience-eyebrow">01 / NUESTRAS CATEGORÍAS</p><h2 id="categories-title">Lo que necesitas,<br><span>en un solo lugar.</span></h2></div><p>Soluciones digitales, bienestar y decoración.<br class="d-none d-md-block"> Elige una categoría para conocer nuestros productos.</p></div>
+            <div class="categories-mosaic">
+                <?php foreach ($catalogCategories as $categoryIndex => $catalogCategory): ?>
+                <a class="category-tile category-tile-<?= $escape($catalogCategory['slug']) ?>" href="<?= $escape($catalogCategory['url']) ?>">
+                    <div class="category-tile-top"><span><?= str_pad((string) ($categoryIndex + 1), 2, '0', STR_PAD_LEFT) ?> / <?= $escape($catalogCategory['eyebrow']) ?></span><span class="category-tile-arrow" aria-hidden="true">↗</span></div>
+                    <div class="category-art" aria-hidden="true"><div class="category-art-orbit"></div><i class="<?= $escape($catalogCategory['icon']) ?>"></i><span class="category-art-point"></span></div>
+                    <div class="category-tile-content"><h3><?= $escape($catalogCategory['name']) ?></h3><p><?= $escape($catalogCategory['summary']) ?></p><span class="category-tile-cta">Explorar colección <i class="fas fa-arrow-right" aria-hidden="true"></i></span></div>
                 </a>
+                <?php endforeach; ?>
+                <?php if (!$catalogCategories): ?><p>Estamos preparando nuevas colecciones. <a href="<?= $escape($whatsappUrl) ?>">Escríbenos para conocer más.</a></p><?php endif; ?>
             </div>
         </div>
     </section>
 
-    <section class="section bg-primary text-white">
+    <section class="experience-featured" aria-labelledby="featured-title">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <h2 class="fw-bold mb-3">
-                        <i class="fas fa-envelope-open me-3"></i>
-                        Mantente conectado
-                    </h2>
-                    <p class="mb-4">
-                        Suscribete a nuestro newsletter y recibe ofertas exclusivas, nuevos productos y
-                        contenido especial directamente en tu bandeja de entrada.
-                    </p>
-                    <div class="d-flex gap-3">
-                        <i class="fas fa-check-circle text-warning"></i>
-                        <span>Ofertas exclusivas</span>
-                    </div>
-                    <div class="d-flex gap-3 mt-2">
-                        <i class="fas fa-check-circle text-warning"></i>
-                        <span>Primero en enterarte de nuevos productos</span>
-                    </div>
-                    <div class="d-flex gap-3 mt-2">
-                        <i class="fas fa-check-circle text-warning"></i>
-                        <span>Suscripciones premium y novedades</span>
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="bg-glass p-4 rounded-custom">
-                        <h4 class="mb-3">Suscribete ahora</h4>
-                        <form id="newsletterForm">
-                            <div class="mb-3">
-                                <input type="email" class="form-control form-control-lg" placeholder="Tu email aqui..." required>
-                            </div>
-                            <button type="submit" class="btn btn-warning btn-lg w-100 hover-lift">
-                                <i class="fas fa-paper-plane me-2"></i>
-                                Suscribirme gratis
-                            </button>
-                        </form>
-                    </div>
-                </div>
+            <div class="experience-section-heading"><div><p class="experience-eyebrow">02 / PRODUCTOS DESTACADOS</p><h2 id="featured-title">Una selección<br><span>para empezar.</span></h2></div><a class="experience-text-link" href="products.php">Ver todo el catálogo <span aria-hidden="true">↗</span></a></div>
+            <div class="experience-product-grid">
+                <?php foreach ($featuredProducts as $item):
+                    $image = Product::getImagePath($item) ?: 'assets/images/placeholder.jpg';
+                    $discount = (float) ($item['discount_percentage'] ?? 0);
+                    $finalPrice = (float) $item['price'] * (1 - $discount / 100);
+                    $itemUrl = 'product.php?id=' . (int) $item['id'];
+                ?>
+                <article class="discovery-card">
+                    <a class="discovery-image" href="<?= $escape($itemUrl) ?>" aria-label="Ver <?= $escape($item['name']) ?>">
+                        <img src="<?= $escape(assetUrl($image)) ?>" alt="<?= $escape($item['name']) ?>" loading="lazy" decoding="async" width="420" height="420">
+                        <?php if ($discount > 0): ?><span class="discovery-discount">−<?= $escape($discount) ?>%</span><?php endif; ?>
+                        <span class="discovery-image-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <div class="discovery-body"><h3><a href="<?= $escape($itemUrl) ?>"><?= $escape($item['name']) ?></a></h3><div class="discovery-bottom"><div class="discovery-price"><?php if ($discount > 0): ?><del>$<?= number_format((float) $item['price'], 2) ?></del><?php endif; ?><span>$<?= number_format($finalPrice, 2) ?></span></div><button type="button" class="discovery-add add-to-cart" data-product-id="<?= (int) $item['id'] ?>" data-product-name="<?= $escape($item['name']) ?>" data-product-price="<?= $escape($finalPrice) ?>" data-product-image="<?= $escape($image) ?>" aria-label="Añadir <?= $escape($item['name']) ?> al carrito"><i class="fas fa-plus" aria-hidden="true"></i></button></div></div>
+                </article>
+                <?php endforeach; ?>
+                <?php if (!$featuredProducts): ?><p>Explora nuestras categorías o <a href="<?= $escape($whatsappUrl) ?>">consulta los productos disponibles</a>.</p><?php endif; ?>
             </div>
         </div>
     </section>
 
+    <section class="experience-how" aria-labelledby="how-title"><div class="container"><div class="experience-section-heading"><div><p class="experience-eyebrow">03 / CÓMO COMPRAR</p><h2 id="how-title">Compra con asesoría.<br><span>En tres pasos.</span></h2></div><p>Consulta disponibilidad y condiciones.<br>Te ayudamos a elegir antes de comprar.</p></div><div class="experience-steps">
+        <article><span>01</span><i class="fas fa-compass" aria-hidden="true"></i><h3>Elige tu producto</h3><p>Consulta las categorías, compara los productos y añade tus favoritos al carrito.</p></article>
+        <article><span>02</span><i class="fab fa-whatsapp" aria-hidden="true"></i><h3>Conversemos</h3><p>Resuelve tus dudas por WhatsApp y consulta disponibilidad, entrega o activación.</p></article>
+        <article><span>03</span><i class="fas fa-box-open" aria-hidden="true"></i><h3>Coordina tu pedido</h3><p>Confirma con nosotros el pago y la entrega o activación, según el producto que elijas.</p></article>
+    </div></div></section>
+
+    <section class="experience-contact" aria-labelledby="contact-title"><div class="container"><div class="experience-contact-panel"><div><p class="experience-eyebrow"><span class="status-dot"></span> ASESORÍA DIRECTA · MOYOALQUIMIA</p><h2 id="contact-title">¿En qué podemos<br><span>ayudarte?</span></h2><p>Pregunta por nuestros productos, suscripciones o software a medida.<br>Consulta precios, disponibilidad y opciones de entrega.</p></div><a href="<?= $escape($whatsappUrl) ?>" target="_blank" rel="noopener noreferrer" class="experience-button experience-button-gold"><i class="fab fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a><span class="contact-orbit" aria-hidden="true"></span></div></div></section>
 </main>
 <?php include __DIR__ . '/partials/footer.php'; ?>
-
 <?php include __DIR__ . '/partials/scripts.php'; ?>
-<script src="<?php echo assetUrl('assets/js/hero-effect.js'); ?>" defer></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    if (window.AOS) {
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100
-        });
-    }
-
-    function createParticles() {
-        const skipParticles = (window.matchMedia && window.matchMedia('(max-width: 767px)').matches)
-            || (navigator.connection && navigator.connection.saveData);
-        if (skipParticles) return;
-        const particles = document.getElementById('particles');
-        if (!particles) {
-            return;
-        }
-        const particleCount = 50;
-
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.width = Math.random() * 4 + 2 + 'px';
-            particle.style.height = particle.style.width;
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            particles.appendChild(particle);
-        }
-    }
-
-    const newsletterForm = document.getElementById('newsletterForm');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const button = this.querySelector('button');
-            const originalText = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Suscribiendo...';
-            button.disabled = true;
-
-            setTimeout(() => {
-                button.innerHTML = '<i class="fas fa-check me-2"></i>Suscrito';
-                button.classList.remove('btn-warning');
-                button.classList.add('btn-success');
-
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.classList.remove('btn-success');
-                    button.classList.add('btn-warning');
-                    button.disabled = false;
-                    this.reset();
-                }, 2000);
-            }, 2000);
-        });
-    }
-
-    createParticles();
-
-    document.querySelectorAll('.category-card[data-category-url]').forEach(card => {
-        const categoryUrl = card.getAttribute('data-category-url');
-        if (!categoryUrl) {
-            return;
-        }
-        card.addEventListener('click', (event) => {
-            if (event.target.closest('a')) {
-                return;
-            }
-            window.location.href = categoryUrl;
-        });
-        card.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                window.location.href = categoryUrl;
-            }
-        });
-    });
-});
-</script>
+<script src="<?= assetUrl('assets/js/experience.js') ?>" defer></script>
 </body>
 </html>

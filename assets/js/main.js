@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeLazyLoading();
     }
 
-    if (!skipAnimations) {
+    if (!skipAnimations && !document.body.classList.contains('experience-home')) {
         if (typeof initializeAnimations === 'function') {
             initializeAnimations();
         }

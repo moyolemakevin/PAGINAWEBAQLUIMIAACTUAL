@@ -30,6 +30,7 @@ if (file_exists($teamFile)) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <link href="<?php echo assetUrl('assets/css/style.css'); ?>" rel="stylesheet">
+    <link href="<?php echo assetUrl('assets/css/experience.css'); ?>" rel="stylesheet">
 
     <link rel="icon" href="<?php echo assetUrl(getSafeSiteImageSetting('favicon_url', 'assets/images/favicon.jpeg')); ?>">
 

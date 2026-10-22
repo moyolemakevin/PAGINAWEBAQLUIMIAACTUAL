@@ -1,2 +1,18 @@
 123456
 123456.pub
+
+# Local configuration, user data, database exports and generated files
+.env
+.env.*
+*.sql
+*.log
+*.pem
+*.key
+config/
+config.php
+data/
+database/
+logs/
+assets/images/
+node_modules/
+api/node_modules/

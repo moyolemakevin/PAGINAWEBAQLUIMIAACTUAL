@@ -51,6 +51,7 @@ $catalogWhatsappUrl = 'https://wa.me/593983015307?text=Hola%2C%20quiero%20asesor
 
     <!-- Custom CSS -->
     <link href="<?php echo assetUrl('assets/css/style.css'); ?>" rel="stylesheet">
+    <link href="<?php echo assetUrl('assets/css/experience.css'); ?>" rel="stylesheet">
 
     <link rel="icon" href="<?php echo assetUrl(getSafeSiteImageSetting('favicon_url', 'assets/images/favicon.jpeg')); ?>">
     

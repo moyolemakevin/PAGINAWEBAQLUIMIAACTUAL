@@ -53,8 +53,6 @@ $whatsappUrl = getSiteSetting('whatsapp_url', '');
         <ul class="list-unstyled">
           <li><a href="about.php" class="text-muted">Sobre Nosotros</a></li>
           <li><a href="contact.php" class="text-muted">Contacto</a></li>
-          <li><a href="#" class="text-muted">Blog</a></li>
-          <li><a href="#" class="text-muted">Careers</a></li>
         </ul>
       </div>
       <div class="col-lg-2 col-md-6 mb-4">
@@ -79,7 +77,7 @@ $whatsappUrl = getSiteSetting('whatsapp_url', '');
     <div class="row justify-content-center">
       <div class="col-12 text-center">
         <p class="text-center text-muted mb-0">
-          &copy; 2025 <?php echo htmlspecialchars($siteName); ?>. Desarrollado con orgullo por <?php echo htmlspecialchars($siteName); ?>. Todos los derechos reservados.
+          &copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($siteName); ?>. Desde Ecuador, con esencia propia. Todos los derechos reservados.
         </p>
       </div>
     </div>

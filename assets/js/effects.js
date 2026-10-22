@@ -43,13 +43,6 @@ function initializeScrollEffects() {
 
     function updateScrollEffects() {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-
-        const heroSection = document.querySelector('.hero-section');
-        if (heroSection) {
-            heroSection.style.transform = `translateY(${rate}px)`;
-        }
-
         const navbar = document.querySelector('.navbar');
         if (navbar) {
             if (scrolled > 50) {
